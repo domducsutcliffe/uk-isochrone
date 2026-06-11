@@ -1590,7 +1590,7 @@ const frame = () => Promise.race([
 ]);
 
 async function reveal() {
-  if (sceneCv.width < 10 || Math.abs(sceneCv.width - Math.round(stage.clientWidth * dpr)) > 2) layout();
+  if (sceneCv.width < 10 || Math.abs(sceneCv.width - Math.round(stage.clientWidth * dpr)) > 2 || Math.abs(sceneCv.height - Math.round(stage.clientHeight * dpr)) > 2) layout();
   const buf = document.createElement('canvas');
   buf.width = sceneCv.width; buf.height = sceneCv.height;
   renderScene(buf.getContext('2d'));
@@ -1681,7 +1681,8 @@ fxCv.addEventListener('pointerleave', () => { drag = null; lastEv = null; if (!p
 fxCv.addEventListener('wheel', e => {
   e.preventDefault();
   const r = fxCv.getBoundingClientRect();
-  const px = e.clientX - r.left, py = e.clientY - r.top;
+  const px = (e.clientX - r.left) / r.width * L.sw;
+  const py = (e.clientY - r.top) / r.height * L.sh;
   const under = invert(px, py);
   view.k = Math.max(1, Math.min(14, view.k * Math.exp(-e.deltaY * 0.0018)));
   if (under) {        // keep the point under the cursor under the cursor
@@ -1767,7 +1768,9 @@ function doHover() {
   hoverRaf = null;
   if (!lastEv || !state || pinned) return;
   const r = fxCv.getBoundingClientRect();
-  const px = lastEv.clientX - r.left, py = lastEv.clientY - r.top;
+  // Map CSS viewport coords → layout coordinate system (robust against stale layout)
+  const px = (lastEv.clientX - r.left) / r.width * L.sw;
+  const py = (lastEv.clientY - r.top) / r.height * L.sh;
   const ll = invert(px, py);
   fxCtx.clearRect(0, 0, fxCv.width, fxCv.height);
   if (!ll) { readout.classList.remove('on'); lastCell = null; return; }
@@ -1783,9 +1786,10 @@ function doHover() {
   readout.innerHTML = buildJourneyHTML(i, lon, lat, false);
   readout.classList.add('on');
   const rw = 308, rh = readout.offsetHeight + 10;
-  let rx = px + 22, ry = py + 18;
-  if (rx + rw > L.sw - 8) rx = px - rw - 18;
-  if (ry + rh > stage.clientHeight - 6) ry = py - rh - 12;
+  // Position readout in viewport coordinates
+  let rx = lastEv.clientX + 22, ry = lastEv.clientY + 18;
+  if (rx + rw > window.innerWidth - 8) rx = lastEv.clientX - rw - 18;
+  if (ry + rh > window.innerHeight - 6) ry = lastEv.clientY - rh - 12;
   readout.style.left = `${Math.max(6, rx)}px`;
   readout.style.top = `${Math.max(6, ry)}px`;
 }
@@ -1871,6 +1875,7 @@ async function boot() {
   showProgress('preparing the plate — coastlines, frontiers, roads');
   await frame();
   await (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve());
+  layout();   // re-measure after fonts/tabs/legend may have changed header/footer height
   buildStaticGrid();
   booted = true;
   const want = (location.hash || '').replace('#', '');
