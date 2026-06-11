@@ -26,7 +26,7 @@ body{
   display:flex; flex-direction:column; height:100%; user-select:none;
 }
 header{
-  flex:0 0 auto; text-align:center; padding:12px 16px 4px;
+  flex:0 0 auto; text-align:center; padding:6px 16px 2px;
 }
 header .t{
   font-family:var(--serif); font-size:14px; letter-spacing:.26em; text-transform:uppercase; color:var(--ink);
@@ -49,7 +49,7 @@ canvas{position:absolute; inset:0; width:100%; height:100%; display:block}
 #fx{cursor:crosshair}
 #legend{
   flex:0 0 auto; display:flex; align-items:center; justify-content:center; gap:0 12px;
-  flex-wrap:wrap; padding:7px 18px 2px; font-size:13px;
+  flex-wrap:wrap; padding:4px 18px 1px; font-size:13px;
 }
 #legend .cap{font-style:italic; color:var(--ink-soft); margin-right:6px; letter-spacing:.02em}
 #legend .modesw{display:inline-flex; align-items:stretch; margin-left:14px; border:1px solid rgba(59,50,38,.65); box-shadow:1px 2px 6px rgba(50,38,20,.15); background:var(--paper)}
@@ -76,7 +76,7 @@ canvas{position:absolute; inset:0; width:100%; height:100%; display:block}
 .key .lab{letter-spacing:.05em; font-variant:all-small-caps; font-size:14px; color:var(--ink)}
 footer{
   flex:0 0 auto; display:flex; justify-content:space-between; align-items:baseline;
-  padding:3px 26px 10px; font-size:12.5px; color:var(--ink-soft); gap:18px;
+  padding:2px 26px 6px; font-size:12.5px; color:var(--ink-soft); gap:18px;
 }
 footer .pub{font-style:italic; letter-spacing:.04em}
 footer a{color:var(--ink); text-decoration:none; border-bottom:1px dotted var(--rule); cursor:pointer}
@@ -1164,13 +1164,14 @@ function layout() {
   const sw = stage.clientWidth > 50 ? stage.clientWidth : Math.max(700, innerWidth || 1200);
   const sh = stage.clientHeight > 50 ? stage.clientHeight : Math.max(420, (innerHeight || 800) - 160);
   const aspect = (mercY(GRID.latTop) - mercY(GRID.latBot)) / LON_SPAN_RAD;   // ≈ 1.44, portrait
-  // a reserved margin column at left holds the cartouche — never on the plate
-  const side = Math.min(240, Math.max(168, sw * .22));
-  const padTop = 10, padBot = 26, gap = 36, padR = 30;
+  // cartouche overlays the map's western ocean — no reserved column needed
+  const padTop = 6, padBot = 6, padL = 8, padR = 8;
   let mapH = sh - padTop - padBot, mapW = mapH / aspect;
-  const availW = sw - side - gap - padR;
+  const availW = sw - padL - padR;
   if (mapW > availW) { mapW = Math.max(220, availW); mapH = mapW * aspect; }
-  const mapX = side + gap + (availW - mapW) / 2, mapY = padTop + (sh - padTop - padBot - mapH) / 2;
+  const mapX = padL + (availW - mapW) / 2, mapY = padTop + (sh - padTop - padBot - mapH) / 2;
+  // cartouche width adapts to map width (drawn over the ocean)
+  const side = Math.min(220, Math.max(140, mapW * .28));
   L = { sw, sh, side, mapX, mapY, mapW, mapH, s: mapW / LON_SPAN_RAD };
   for (const cv of [sceneCv, fxCv]) {
     cv.width = Math.round(sw * dpr); cv.height = Math.round(sh * dpr);
@@ -1470,9 +1471,9 @@ function wrapText(ctx, text, maxW) {
   return lines;
 }
 function drawTitleBlock(ctx) {
-  // the cartouche lives in the reserved paper margin, wholly off the plate
-  const boxW = L.side - 26;
-  const x = 13;
+  // the cartouche floats over the map's western ocean
+  const boxW = Math.min(L.side, L.mapW * 0.26);
+  const x = L.mapX + 12;
   const para = `shewing the shortest number of hours’ journey from ${ORIGIN.name}, ${ORIGIN.descr}, by the quickest through routes — ${modelMode === 'surface' ? 'road, rail and ferry; no aëroplane is taken' : 'road, rail, scheduled air and ferry'}. It is supposed that connexions are favourable, as the original printed.`;
   ctx.save();
   const small = boxW < 190;
