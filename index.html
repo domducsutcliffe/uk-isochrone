@@ -1,0 +1,1907 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Isochronic Passage Chart of the United Kingdom &amp; Ireland — 2026</title>
+<meta name="description" content="How far can you travel in a day? Door-to-door travel time from West Silvertown, Crawley or Dungannon to every point of the United Kingdom and Ireland — road, rail, scheduled air and ferry — drawn as a Victorian hand-tinted lithograph.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f0e7cd; --paper-deep:#e6dab8; --paper-edge:#dccfa9;
+  --ink:#3b3226; --ink-soft:rgba(59,50,38,.62); --ink-faint:rgba(59,50,38,.34);
+  --rule:rgba(59,50,38,.5);
+  --accent:#7d2e1d;
+  --serif:'EB Garamond', Georgia, 'Times New Roman', serif;
+  --display:'Playfair Display', Georgia, serif;
+}
+*{box-sizing:border-box; margin:0; padding:0}
+html,body{height:100%}
+body{
+  background:var(--paper-deep);
+  background-image:radial-gradient(ellipse at 50% 38%, #f1e8cf 0%, #e9ddbc 62%, #ddcfa6 100%);
+  color:var(--ink); font-family:var(--serif); overflow:hidden;
+  display:flex; flex-direction:column; height:100vh; user-select:none;
+}
+header{
+  flex:0 0 auto; text-align:center; padding:12px 16px 4px;
+}
+header .t{
+  font-family:var(--serif); font-size:14px; letter-spacing:.26em; text-transform:uppercase; color:var(--ink);
+}
+header .s{font-style:italic; font-size:12.5px; color:var(--ink-soft); letter-spacing:.04em; margin-top:2px}
+header #tabs{display:flex; align-items:baseline; justify-content:center; gap:.25rem; padding-top:5px; flex-wrap:wrap}
+.tab{
+  font-family:var(--serif); font-size:13.5px; letter-spacing:.22em; cursor:pointer;
+  color:var(--ink-soft); background:none; border:none; padding:3px 9px 5px;
+  text-transform:uppercase; position:relative; transition:color .25s;
+}
+.tab:hover{color:var(--ink)}
+.tab[aria-pressed="true"]{color:var(--ink)}
+.tab[aria-pressed="true"]::after{
+  content:""; position:absolute; left:8px; right:8px; bottom:0; height:3px;
+  border-top:1px solid var(--ink); border-bottom:1px solid var(--ink);
+}
+main{flex:1 1 auto; position:relative; min-height:0}
+canvas{position:absolute; inset:0; width:100%; height:100%; display:block}
+#fx{cursor:crosshair}
+#legend{
+  flex:0 0 auto; display:flex; align-items:center; justify-content:center; gap:0 12px;
+  flex-wrap:wrap; padding:7px 18px 2px; font-size:13px;
+}
+#legend .cap{font-style:italic; color:var(--ink-soft); margin-right:6px; letter-spacing:.02em}
+#legend .modesw{display:inline-flex; align-items:stretch; margin-left:14px; border:1px solid rgba(59,50,38,.65); box-shadow:1px 2px 6px rgba(50,38,20,.15); background:var(--paper)}
+#legend .modesw button{
+  display:flex; flex-direction:column; align-items:center; gap:2px; cursor:pointer;
+  font-family:var(--serif); font-variant:all-small-caps; letter-spacing:.1em; font-size:13.5px;
+  color:var(--ink-soft); background:none; border:none; border-right:1px solid rgba(59,50,38,.35);
+  padding:4px 12px 3px; transition:background .15s, color .15s;
+}
+#legend .modesw button:last-child{border-right:none}
+#legend .modesw button:hover{color:var(--accent); background:rgba(125,46,29,.05)}
+#legend .modesw button.cur{color:var(--ink); background:rgba(59,50,38,.09); font-weight:600}
+#legend .modesw .strip{width:54px; height:9px; border:1px solid rgba(59,50,38,.55); pointer-events:none}
+#legend .modesw button.cur .strip{box-shadow:0 0 0 1.5px var(--accent)}
+#legend .modesw .swcap{
+  display:flex; align-items:center; padding:0 9px; font-style:italic; font-size:12.5px;
+  color:var(--ink-soft); border-right:1px solid rgba(59,50,38,.35); background:rgba(59,50,38,.04);
+}
+.key{display:inline-flex; align-items:center; gap:6px; white-space:nowrap}
+.key .sw{
+  width:24px; height:11px; display:inline-block;
+  border:1px solid rgba(59,50,38,.55); box-shadow:inset 0 0 0 1px rgba(240,231,205,.5);
+}
+.key .lab{letter-spacing:.05em; font-variant:all-small-caps; font-size:14px; color:var(--ink)}
+footer{
+  flex:0 0 auto; display:flex; justify-content:space-between; align-items:baseline;
+  padding:3px 26px 10px; font-size:12.5px; color:var(--ink-soft); gap:18px;
+}
+footer .pub{font-style:italic; letter-spacing:.04em}
+footer a{color:var(--ink); text-decoration:none; border-bottom:1px dotted var(--rule); cursor:pointer}
+footer a:hover{color:var(--accent); border-color:var(--accent)}
+footer .eng{font-size:11.5px; letter-spacing:.06em; font-style:italic; color:var(--ink-faint)}
+#readout{
+  position:absolute; z-index:30; width:300px; pointer-events:none;
+  background:linear-gradient(160deg,#f4ecd4,#ecdfc0);
+  border:1px solid rgba(59,50,38,.65); box-shadow:0 1px 0 #fff6 inset, 3px 4px 14px rgba(50,38,20,.28);
+  padding:11px 14px 9px; opacity:0; transition:opacity .14s;
+}
+#readout.on{opacity:1}
+#readout::before{content:""; position:absolute; inset:3px; border:1px solid rgba(59,50,38,.28); pointer-events:none}
+#readout .place{font-variant:all-small-caps; font-size:17px; letter-spacing:.08em; line-height:1.1}
+#readout .geo{font-size:11.5px; font-style:italic; color:var(--ink-soft); margin-top:1px}
+#readout .total{font-family:var(--display); font-size:26px; font-weight:600; margin:.28rem 0 .1rem}
+#readout .band{font-size:12px; font-variant:all-small-caps; letter-spacing:.1em; color:var(--ink-soft)}
+#readout hr{border:none; border-top:1px solid rgba(59,50,38,.35); margin:7px 0 6px}
+#readout .legs{font-size:12.8px; line-height:1.5}
+#readout .leg{display:flex; justify-content:space-between; gap:8px}
+#readout .leg .l{overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+#readout .leg .t{white-space:nowrap; font-variant-numeric:tabular-nums}
+#readout .leg.fly .l, #readout .leg.rail .l, #readout .leg.ship .l{font-weight:600}
+#readout .foot{font-size:10.8px; font-style:italic; color:var(--ink-faint); margin-top:6px}
+#readout.pinned{pointer-events:auto; box-shadow:0 1px 0 #fff6 inset, 5px 7px 22px rgba(50,38,20,.4)}
+#readout .sub{font-size:10.6px; font-style:italic; color:var(--ink-faint); margin:-2px 0 3px 12px}
+#progress{
+  position:absolute; inset:0; z-index:40; display:flex; align-items:center; justify-content:center;
+  background:rgba(238,228,200,.6); backdrop-filter:blur(1.5px) sepia(.2);
+  opacity:0; pointer-events:none; transition:opacity .2s;
+}
+#progress.on{opacity:1; pointer-events:auto}
+#progress .card{
+  background:var(--paper); border:1px solid rgba(59,50,38,.6); padding:22px 34px 20px;
+  box-shadow:4px 6px 20px rgba(50,38,20,.25); text-align:center; min-width:380px;
+}
+#progress h3{font-family:var(--display); font-weight:600; letter-spacing:.3em; font-size:13px; text-transform:uppercase}
+#progress p{font-style:italic; font-size:14px; color:var(--ink-soft); margin:6px 0 12px}
+#progress .barwrap{height:5px; border:1px solid rgba(59,50,38,.55); padding:1px; background:#efe5c9}
+#progress .bar{height:100%; width:0%; background:var(--ink); transition:width .15s}
+#metho{
+  position:fixed; inset:0; z-index:60; overflow-y:auto; display:none;
+  background:rgba(40,32,20,.45);
+}
+#metho.on{display:block}
+#metho .page{
+  max-width:760px; margin:4vh auto 6vh; background:var(--paper); color:var(--ink);
+  border:1px solid rgba(59,50,38,.7); box-shadow:0 18px 60px rgba(20,14,4,.5);
+  padding:54px 64px 60px; position:relative; user-select:text;
+}
+#metho .page::before{content:""; position:absolute; inset:10px; border:1px solid rgba(59,50,38,.3); pointer-events:none}
+#metho .close{
+  position:absolute; top:16px; right:20px; font-size:22px; line-height:1; cursor:pointer;
+  background:none; border:none; color:var(--ink-soft); z-index:2;
+}
+#metho .close:hover{color:var(--accent)}
+#metho h2{
+  font-family:var(--display); font-size:21px; font-weight:600; letter-spacing:.24em;
+  text-align:center; text-transform:uppercase; margin-bottom:4px;
+}
+#metho .sub{text-align:center; font-style:italic; color:var(--ink-soft); font-size:14.5px; margin-bottom:26px}
+#metho h4{
+  font-variant:all-small-caps; letter-spacing:.18em; font-size:16px; margin:24px 0 6px;
+  border-bottom:1px solid rgba(59,50,38,.35); padding-bottom:3px;
+}
+#metho p, #metho li{font-size:14.8px; line-height:1.62; margin-bottom:8px; text-align:justify}
+#metho ul{padding-left:20px}
+#metho .note{font-style:italic; color:var(--ink-soft)}
+@media (max-width:900px){ #metho .page{padding:40px 26px} }
+</style>
+</head>
+<body>
+<noscript><div style="padding:3rem;font-family:Georgia,serif;text-align:center">This chart is computed in your browser and needs JavaScript enabled.</div></noscript>
+<header>
+  <div class="t">Isochronic Passage Chart of the United Kingdom &amp; Ireland</div>
+  <div class="s">door-to-door travel time by road, rail, scheduled air &amp; ferry — June 2026 · scroll to magnify, drag to pan, double-click to restore</div>
+  <div id="tabs" role="tablist" aria-label="Origin"></div>
+</header>
+<main id="stage">
+  <canvas id="scene"></canvas>
+  <canvas id="fx"></canvas>
+  <div id="progress"><div class="card">
+    <h3>Preparing the plate</h3>
+    <p id="progress-label">computing passage times…</p>
+    <div class="barwrap"><div class="bar" id="progress-bar"></div></div>
+  </div></div>
+</main>
+<div id="legend"></div>
+<footer>
+  <span class="pub" id="credit-left">Drawn from current timetables and published travel data, June MMXXVI — third edition.</span>
+  <span><a id="metho-link">On the construction of this chart</a></span>
+  <span class="eng">After Francis Galton, F.R.S. — Isochronic Passage Chart, 1881</span>
+</footer>
+<aside id="readout"></aside>
+<div id="metho"><div class="page">
+  <button class="close" id="metho-close" aria-label="close">×</button>
+  <div id="metho-body"></div>
+</div></div>
+
+<script src="vendor/d3.v7.min.js"></script>
+<script src="data/uk-geo.js"></script>
+<script>
+'use strict';
+/* ============================================================ constants */
+const GRID = { lonMin:-11, lonMax:3, latTop:61.1, latBot:49.8, cell:0.02 };
+GRID.W = Math.round((GRID.lonMax - GRID.lonMin) / GRID.cell);
+GRID.H = Math.round((GRID.latTop - GRID.latBot) / GRID.cell);
+const N = GRID.W * GRID.H;
+const BAND_MIN = [60,120,180,240,300,360,480,600,720];
+const BAND_LABELS = ['within 1 hour','1–2 hours','2–3 hours','3–4 hours','4–5 hours',
+                     '5–6 hours','6–8 hours','8–10 hours','10–12 hours','beyond 12 hours'];
+const RAMP = ['#69936c','#85a472','#aab97a','#d3c886','#ecd794',
+              '#f0cda6','#eec0a4','#a9c0b5','#8cb0a9','#c2966e'];
+const COL = { paper:'#f0e7cd', land:'#ede2c3', landFar:'#e9deba', sea:'#e1d4b0', ink:'#3b3226', coast:'#46392a', wash:0.60 };
+let renderMode = 'wash';          // 'wash' | 'relief' | 'night'
+let modelMode = 'all';            // 'all' (air & rail) | 'surface' (rail & sail — no aëroplane)
+const NIGHT_RAMP = ['#fff3c4','#ffd97a','#f7b955','#e89a4b','#cf7a4e',
+                    '#a85f63','#744970','#4a4379','#2b3668','#1b2547'];
+const NIGHT = {
+  sea: [13, 17, 22], land: [23, 29, 36], landFar: [18, 23, 29],
+  grat: 'rgba(168,182,196,.13)', coast: 'rgba(208,218,228,.45)',
+  contour: 'rgba(255,236,190,.20)',
+  label: 'rgba(212,220,228,.88)', labelSoft: 'rgba(212,220,228,.55)',
+  ocean: 'rgba(176,190,204,.26)', origin: '#ffd479'
+};
+const RELIEF_STOPS = [
+  [0.00, [122, 158, 106]], [0.22, [165, 178, 117]], [0.40, [209, 195, 130]],
+  [0.58, [199, 158, 103]], [0.76, [163, 122, 90]], [0.90, [196, 178, 160]], [1.00, [238, 233, 222]]
+];
+const RELIEF_CAP = 720;           // minutes at the snowline (12 h)
+function reliefElev(min) { return Math.pow(Math.min(min, RELIEF_CAP) / RELIEF_CAP, 0.55); }
+function reliefColor(e) {
+  for (let s = 1; s < RELIEF_STOPS.length; s++) {
+    if (e <= RELIEF_STOPS[s][0]) {
+      const [e0, c0] = RELIEF_STOPS[s - 1], [e1, c1] = RELIEF_STOPS[s];
+      const f = (e - e0) / (e1 - e0);
+      return [c0[0] + (c1[0] - c0[0]) * f, c0[1] + (c1[1] - c0[1]) * f, c0[2] + (c1[2] - c0[2]) * f];
+    }
+  }
+  return RELIEF_STOPS[RELIEF_STOPS.length - 1][1];
+}
+function reliefColorCSS(min) { const c = reliefColor(reliefElev(min)); return `rgb(${c.map(Math.round).join(',')})`; }
+
+/* ============================================================ the data layer
+   Hand-researched June 2026: fastest regular timetables, typical block times.
+   Estimated entries are marked est and print a ° in the journey card. */
+// destination airports the origins fly to: [label, lat, lon]
+const AP = {
+  EDI:['Edinburgh Airport',55.9508,-3.3615], GLA:['Glasgow Airport',55.8717,-4.4331],
+  BHD:['Belfast City Airport',54.6181,-5.8725], BFS:['Belfast International',54.6575,-6.2158],
+  IOM:['Isle of Man (Ronaldsway)',54.0833,-4.6239], ABZ:['Aberdeen (Dyce)',57.2019,-2.1978],
+  INV:['Inverness Airport',57.5425,-4.0475], NQY:['Newquay (Cornwall)',50.4406,-4.9954],
+  LSI:['Sumburgh, Shetland',59.8789,-1.2956], KOI:['Kirkwall, Orkney',58.9578,-2.9050],
+  SYY:['Stornoway, Lewis',58.2156,-6.3311], BEB:['Benbecula',57.4811,-7.3628],
+  BRR:['Barra (Traigh Mhòr beach)',57.0228,-7.4431], ILY:['Islay (Glenegedale)',55.6819,-6.2567],
+  TRE:['Tiree',56.4992,-6.8692], CAL:['Campbeltown',55.4372,-5.6864],
+  WIC:['Wick (John o’Groats)',58.4589,-3.0931], ISC:['St Mary’s, Scilly',49.9133,-6.2917],
+  NRL:['North Ronaldsay',59.3675,-2.4344], PPW:['Papa Westray',59.3517,-2.9003],
+  LHR:['Heathrow',51.4700,-0.4543], LGW:['Gatwick',51.1537,-0.1821],
+  LCY:['London City',51.5053,0.0553], MAN:['Manchester Airport',53.3537,-2.2750],
+  BHX:['Birmingham Airport',52.4539,-1.7480], LPL:['Liverpool John Lennon',53.3336,-2.8497],
+  NCL:['Newcastle Airport',55.0375,-1.6917], BRS:['Bristol Airport',51.3827,-2.7191],
+  DUB:['Dublin Airport',53.4264,-6.2499], ORK:['Cork Airport',51.8413,-8.4911],
+  SNN:['Shannon',52.7019,-8.9248], NOC:['Ireland West (Knock)',53.9103,-8.8185],
+  CFN:['Donegal (Carrickfinn)',55.0442,-8.3410]
+};
+
+// rail network: [id, name, lat, lon]
+const RAIL_NODES = [
+  ['LST','Liverpool Street',51.5179,-0.0817],['KGX','King’s Cross',51.5308,-0.1238],
+  ['STP','St Pancras',51.5310,-0.1257],['EUS','Euston',51.5282,-0.1337],
+  ['PAD','Paddington',51.5154,-0.1755],['WAT','Waterloo',51.5031,-0.1132],
+  ['VIC','Victoria',51.4952,-0.1441],['STR','Stratford',51.5419,-0.0031],
+  ['BHM','Birmingham',52.4778,-1.8985],['MAN','Manchester',53.4774,-2.2309],
+  ['LIV','Liverpool',53.4075,-2.9776],['PRE','Preston',53.7560,-2.7080],
+  ['LAN','Lancaster',54.0489,-2.8014],['CAR','Carlisle',54.8907,-2.9333],
+  ['GLA','Glasgow',55.8589,-4.2577],['EDI','Edinburgh',55.9520,-3.1890],
+  ['YRK','York',53.9580,-1.0934],['LDS','Leeds',53.7947,-1.5478],
+  ['NCL','Newcastle',54.9686,-1.6174],['SHF','Sheffield',53.3781,-1.4621],
+  ['NOT','Nottingham',52.9470,-1.1465],['LEI','Leicester',52.6314,-1.1252],
+  ['DBY','Derby',52.9162,-1.4633],['PBO','Peterborough',52.5746,-0.2503],
+  ['DON','Doncaster',53.5217,-1.1397],['HUL','Hull',53.7444,-0.3454],
+  ['LCN','Lincoln',53.2262,-0.5400],['CAM','Cambridge',52.1944,0.1374],
+  ['IPS','Ipswich',52.0507,1.1445],['NRW','Norwich',52.6271,1.3066],
+  ['COL','Colchester',51.9007,0.8957],['SEN','Southend',51.5410,0.7110],
+  ['SCA','Scarborough',54.2796,-0.4054],
+  ['RDG','Reading',51.4587,-0.9719],['OXF','Oxford',51.7534,-1.2700],
+  ['SWI','Swindon',51.5655,-1.7854],['BTH','Bath',51.3777,-2.3572],
+  ['BRS','Bristol',51.4490,-2.5813],['CNM','Cheltenham',51.8997,-2.0998],
+  ['CDF','Cardiff',51.4760,-3.1791],['SWA','Swansea',51.6255,-3.9409],
+  ['EXE','Exeter',50.7290,-3.5435],['PLY','Plymouth',50.3779,-4.1430],
+  ['TRU','Truro',50.2632,-5.0510],['PNZ','Penzance',50.1216,-5.5323],
+  ['SOU','Southampton',50.9072,-1.4140],['BMH','Bournemouth',50.7274,-1.8635],
+  ['WMS','Weymouth',50.6144,-2.4547],['POR','Portsmouth',50.7984,-1.0913],
+  ['SAL','Salisbury',51.0707,-1.8062],['BTN','Brighton',50.8290,-0.1412],
+  ['GTW','Gatwick',51.1564,-0.1610],['AFK','Ashford',51.1437,0.8761],
+  ['CBW','Canterbury',51.2843,1.0752],['DVR','Dover',51.1257,1.3043],
+  ['MAR','Margate',51.3886,1.3762],
+  ['CRE','Crewe',53.0896,-2.4326],['CHE','Chester',53.1968,-2.8800],
+  ['BAN','Bangor',53.2220,-4.1360],['HHD','Holyhead',53.3074,-4.6310],
+  ['SHR','Shrewsbury',52.7115,-2.7498],['ABY','Aberystwyth',52.4140,-4.0820],
+  ['STG','Stirling',56.1198,-3.9357],['PTH','Perth',56.3925,-3.4390],
+  ['DUN','Dundee',56.4566,-2.9714],['ABD','Aberdeen',57.1437,-2.0981],
+  ['INV','Inverness',57.4800,-4.2238],['KYL','Kyle of Lochalsh',57.2796,-5.7136],
+  ['THU','Thurso',58.5904,-3.5276],['WCK','Wick',58.4416,-3.0967],
+  ['FTW','Fort William',56.8198,-5.1052],['MLG','Mallaig',57.0058,-5.8284],
+  ['OBA','Oban',56.4127,-5.4742],['AYR','Ayr',55.4586,-4.6292],
+  ['DUB','Dublin',53.3530,-6.2470],['CRK','Cork',51.8980,-8.4580],
+  ['GWY','Galway',53.2740,-9.0480],['LIM','Limerick',52.6590,-8.6240],
+  ['BEL','Belfast',54.6020,-5.9190]
+];
+// [a, b, minutes] — fastest regular through service; direct edges where through trains run
+const RAIL_EDGES = [
+  ['LST','COL',47],['COL','IPS',18],['IPS','NRW',40],['LST','NRW',90],['LST','CAM',68],
+  ['KGX','CAM',48],['LST','SEN',53],
+  ['KGX','PBO',47],['KGX','DON',88],['KGX','YRK',112],['KGX','LDS',133],['KGX','HUL',155],
+  ['KGX','LCN',118],['KGX','NCL',165],['KGX','EDI',245],
+  ['YRK','NCL',58],['NCL','EDI',95],['YRK','SCA',50],['YRK','LDS',23],['DON','SHF',25],
+  ['STP','LEI',62],['LEI','NOT',28],['STP','NOT',98],['STP','DBY',92],['DBY','SHF',32],['STP','SHF',119],
+  ['STP','AFK',37],['AFK','CBW',14],['AFK','DVR',20],['STP','MAR',88],
+  ['EUS','BHM',84],['EUS','MAN',126],['EUS','LIV',132],['EUS','PRE',128],['PRE','LAN',16],
+  ['PRE','CAR',58],['CAR','GLA',70],['EUS','GLA',265],['EUS','CAR',197],
+  ['EUS','CRE',90],['CRE','CHE',20],['CHE','BAN',62],['BAN','HHD',32],['EUS','HHD',218],
+  ['BHM','SHR',56],['SHR','ABY',105],['BHM','MAN',87],['BHM','BRS',79],['BHM','CNM',42],['PAD','CNM',123],
+  ['MAN','LDS',49],['MAN','SHF',51],['MAN','LIV',33],['SHF','LDS',40],['NCL','CAR',88],
+  ['PAD','RDG',23],['RDG','OXF',24],['PAD','SWI',46],['SWI','BTH',32],['BTH','BRS',13],['PAD','BRS',82],
+  ['PAD','CDF',107],['CDF','SWA',52],['PAD','SWA',165],
+  ['PAD','EXE',122],['EXE','PLY',58],['PAD','PLY',190],['PLY','TRU',75],['TRU','PNZ',38],['PAD','PNZ',297],
+  ['WAT','SAL',85],['WAT','SOU',74],['SOU','BMH',35],['WAT','BMH',106],['BMH','WMS',50],['WAT','WMS',170],['WAT','POR',90],
+  ['VIC','GTW',28],['GTW','BTN',26],['VIC','BTN',55],
+  ['EDI','GLA',47],['EDI','STG',47],['STG','PTH',32],['PTH','DUN',22],['EDI','DUN',65],
+  ['DUN','ABD',70],['EDI','ABD',145],['PTH','INV',130],['EDI','INV',210],['INV','ABD',135],
+  ['INV','KYL',150],['INV','THU',225],['INV','WCK',248],
+  ['GLA','FTW',226],['FTW','MLG',84],['GLA','OBA',187],['GLA','AYR',50],['GLA','STG',27],
+  ['DUB','CRK',150],['DUB','GWY',130],['DUB','LIM',120],['DUB','BEL',135]
+];
+
+// air itineraries from the door, per origin
+function legsum(legs) { return legs.reduce((s, l) => s + l.min, 0); }
+const A = (k, label, min, x) => ({ k, label, min, ...(x || {}) });
+const arr = m => A('arrive','arrival & exit', m);
+// leg builders: door → departure gate
+const lcy = b => [A('access','DLR to London City Airport',12), A('checkin','check-in at LCY',50), ...b];
+const lhr = b => [A('access','Elizabeth line to Heathrow',55), A('checkin','check-in at LHR',75), ...b];
+const wsvLgw = b => [A('access','Jubilee line & Thameslink to Gatwick',70), A('checkin','check-in at LGW',75), ...b];
+const lgw = b => [A('access','to Gatwick Airport',18), A('checkin','check-in at LGW',75), ...b];
+const bfs = b => [A('access','by road to Belfast International',45), A('checkin','check-in at BFS',70), ...b];
+const bhd = b => [A('access','by road to Belfast City Airport',55), A('checkin','check-in at BHD',50), ...b];
+
+const ORIGINS = [
+  { id:'wsv', name:'West Silvertown', descr:'in the East of London', lat:51.5027, lon:0.0226,
+    termini: {
+      LST: { min: 26, label: 'DLR & Elizabeth line to Liverpool Street' },
+      KGX: { min: 38, label: 'DLR & Elizabeth line to King’s Cross' },
+      STP: { min: 38, label: 'DLR & Elizabeth line to St Pancras' },
+      EUS: { min: 42, label: 'DLR, Elizabeth line & Underground to Euston' },
+      PAD: { min: 36, label: 'DLR & Elizabeth line to Paddington' },
+      WAT: { min: 28, label: 'DLR & Jubilee line to Waterloo' },
+      VIC: { min: 38, label: 'Jubilee & Victoria lines to Victoria' },
+      STR: { min: 16, label: 'DLR & Jubilee line to Stratford' }
+    },
+    air: [
+      ['EDI', lcy([A('fly','LCY → EDI',80), arr(20)])],
+      ['GLA', lcy([A('fly','LCY → GLA',85), arr(20)])],
+      ['BHD', lcy([A('fly','LCY → BHD',80), arr(20)])],
+      ['IOM', lcy([A('fly','LCY → IOM',70,{est:true}), arr(20)])],
+      ['ABZ', lhr([A('fly','LHR → ABZ',95), arr(25)])],
+      ['INV', lhr([A('fly','LHR → INV',95), arr(25)])],
+      ['NQY', wsvLgw([A('fly','LGW → NQY',75), arr(25)])],
+      ['LSI', lcy([A('fly','LCY → EDI',80), A('connect','connexion at EDI',45), A('fly','EDI → LSI',70), arr(20)])],
+      ['KOI', lcy([A('fly','LCY → EDI',80), A('connect','connexion at EDI',45), A('fly','EDI → KOI',60), arr(20)])],
+      ['SYY', lcy([A('fly','LCY → GLA',85), A('connect','connexion at GLA',45), A('fly','GLA → SYY',65), arr(20)])],
+      ['BEB', lcy([A('fly','LCY → GLA',85), A('connect','connexion at GLA',45), A('fly','GLA → BEB',65), arr(20)])],
+      ['BRR', lcy([A('fly','LCY → GLA',85), A('connect','connexion at GLA',45), A('fly','GLA → BRR',75), arr(15)])],
+      ['ILY', lcy([A('fly','LCY → GLA',85), A('connect','connexion at GLA',45), A('fly','GLA → ILY',45), arr(15)])],
+      ['TRE', lcy([A('fly','LCY → GLA',85), A('connect','connexion at GLA',45), A('fly','GLA → TRE',55), arr(15)])],
+      ['CAL', lcy([A('fly','LCY → GLA',85), A('connect','connexion at GLA',45), A('fly','GLA → CAL',40), arr(15)])],
+      ['WIC', lhr([A('fly','LHR → ABZ',95), A('connect','connexion at ABZ',45), A('fly','ABZ → WIC',40), arr(15)])],
+      ['ISC', wsvLgw([A('fly','LGW → NQY',75), A('connect','connexion at Newquay',40), A('fly','Skybus NQY → ISC',30), arr(10)])],
+      ['NRL', lcy([A('fly','LCY → EDI',80), A('connect','connexion at EDI',45), A('fly','EDI → KOI',60),
+                   A('connect','connexion at Kirkwall',30), A('fly','KOI → NRL (islander)',15), arr(10)])],
+      ['PPW', lcy([A('fly','LCY → EDI',80), A('connect','connexion at EDI',45), A('fly','EDI → KOI',60),
+                   A('connect','connexion at Kirkwall',30), A('fly','KOI → PPW (islander)',15), arr(10)])],
+      ['DUB', lcy([A('fly','LCY → DUB',80), arr(20)])],
+      ['ORK', lhr([A('fly','LHR → ORK',80), arr(20)])],
+      ['SNN', lhr([A('fly','LHR → SNN',85), arr(20)])],
+      ['NOC', [A('access','rail to Stansted',70), A('checkin','check-in at STN',70), A('fly','STN → NOC',80), arr(20)]],
+      ['CFN', lcy([A('fly','LCY → DUB',80), A('connect','connexion at DUB',45), A('fly','DUB → CFN (Aer Lingus regional)',50), arr(15)])]
+    ] },
+  { id:'crawley', name:'Crawley', descr:'in the County of Sussex', lat:51.1092, lon:-0.1872,
+    termini: {
+      GTW: { min: 12, label: 'to Gatwick Airport station' },
+      BTN: { min: 32, label: 'Southern from Three Bridges to Brighton' },
+      VIC: { min: 48, label: 'Southern from Three Bridges to Victoria' },
+      STP: { min: 60, label: 'Thameslink from Three Bridges to St Pancras' },
+      KGX: { min: 64, label: 'Thameslink to King’s Cross' },
+      EUS: { min: 75, label: 'Thameslink & Underground to Euston' },
+      WAT: { min: 65, label: 'via Clapham Junction to Waterloo' },
+      PAD: { min: 85, label: 'Thameslink & Underground to Paddington' },
+      LST: { min: 75, label: 'Thameslink & Underground to Liverpool Street' }
+    },
+    air: [
+      ['EDI', lgw([A('fly','LGW → EDI',85), arr(20)])],
+      ['GLA', lgw([A('fly','LGW → GLA',85), arr(20)])],
+      ['BFS', lgw([A('fly','LGW → BFS',80), arr(25)])],
+      ['IOM', lgw([A('fly','LGW → IOM',80,{est:true}), arr(20)])],
+      ['INV', lgw([A('fly','LGW → INV',95), arr(25)])],
+      ['ABZ', lgw([A('fly','LGW → ABZ',95,{est:true}), arr(25)])],
+      ['NQY', lgw([A('fly','LGW → NQY',75), arr(25)])],
+      ['ISC', lgw([A('fly','LGW → NQY',75), A('connect','connexion at Newquay',40), A('fly','Skybus NQY → ISC',30), arr(10)])],
+      ['LSI', lgw([A('fly','LGW → EDI',85), A('connect','connexion at EDI',45), A('fly','EDI → LSI',70), arr(20)])],
+      ['KOI', lgw([A('fly','LGW → EDI',85), A('connect','connexion at EDI',45), A('fly','EDI → KOI',60), arr(20)])],
+      ['SYY', lgw([A('fly','LGW → GLA',85), A('connect','connexion at GLA',45), A('fly','GLA → SYY',65), arr(20)])],
+      ['BEB', lgw([A('fly','LGW → GLA',85), A('connect','connexion at GLA',45), A('fly','GLA → BEB',65), arr(20)])],
+      ['BRR', lgw([A('fly','LGW → GLA',85), A('connect','connexion at GLA',45), A('fly','GLA → BRR',75), arr(15)])],
+      ['ILY', lgw([A('fly','LGW → GLA',85), A('connect','connexion at GLA',45), A('fly','GLA → ILY',45), arr(15)])],
+      ['TRE', lgw([A('fly','LGW → GLA',85), A('connect','connexion at GLA',45), A('fly','GLA → TRE',55), arr(15)])],
+      ['CAL', lgw([A('fly','LGW → GLA',85), A('connect','connexion at GLA',45), A('fly','GLA → CAL',40), arr(15)])],
+      ['WIC', lgw([A('fly','LGW → ABZ',95,{est:true}), A('connect','connexion at ABZ',45), A('fly','ABZ → WIC',40), arr(15)])],
+      ['NRL', lgw([A('fly','LGW → EDI',85), A('connect','connexion at EDI',45), A('fly','EDI → KOI',60),
+                   A('connect','connexion at Kirkwall',30), A('fly','KOI → NRL (islander)',15), arr(10)])],
+      ['PPW', lgw([A('fly','LGW → EDI',85), A('connect','connexion at EDI',45), A('fly','EDI → KOI',60),
+                   A('connect','connexion at Kirkwall',30), A('fly','KOI → PPW (islander)',15), arr(10)])],
+      ['DUB', lgw([A('fly','LGW → DUB',85), arr(20)])],
+      ['ORK', lgw([A('fly','LGW → ORK',85), arr(20)])],
+      ['SNN', lgw([A('fly','LGW → SNN',90,{est:true}), arr(20)])],
+      ['CFN', lgw([A('fly','LGW → DUB',85), A('connect','connexion at DUB',45), A('fly','DUB → CFN (Aer Lingus regional)',50), arr(15)])]
+    ] },
+  { id:'dungannon', name:'Dungannon', descr:'in the County of Tyrone', lat:54.5083, lon:-6.7666,
+    termini: {},          // Dungannon's railway closed in 1956 — the network is entered by air
+    air: [
+      ['LHR', bfs([A('fly','BFS → LHR',85), arr(25)])],
+      ['LCY', bhd([A('fly','BHD → LCY',80), arr(20)])],
+      ['LGW', bfs([A('fly','BFS → LGW',80), arr(25)])],
+      ['MAN', bfs([A('fly','BFS → MAN',50), arr(25)])],
+      ['BHX', bfs([A('fly','BFS → BHX',55), arr(25)])],
+      ['LPL', bfs([A('fly','BFS → LPL',45), arr(25)])],
+      ['NCL', bfs([A('fly','BFS → NCL',45), arr(25)])],
+      ['BRS', bfs([A('fly','BFS → BRS',60), arr(25)])],
+      ['EDI', bfs([A('fly','BFS → EDI',45), arr(20)])],
+      ['GLA', bfs([A('fly','BFS → GLA',40), arr(20)])],
+      ['ABZ', bhd([A('fly','BHD → ABZ',60,{est:true}), arr(20)])],
+      ['IOM', bhd([A('fly','BHD → IOM',40,{est:true}), arr(15)])],
+      ['SYY', bfs([A('fly','BFS → GLA',40), A('connect','connexion at GLA',45), A('fly','GLA → SYY',65), arr(20)])],
+      ['BEB', bfs([A('fly','BFS → GLA',40), A('connect','connexion at GLA',45), A('fly','GLA → BEB',65), arr(20)])],
+      ['BRR', bfs([A('fly','BFS → GLA',40), A('connect','connexion at GLA',45), A('fly','GLA → BRR',75), arr(15)])],
+      ['ILY', bfs([A('fly','BFS → GLA',40), A('connect','connexion at GLA',45), A('fly','GLA → ILY',45), arr(15)])],
+      ['TRE', bfs([A('fly','BFS → GLA',40), A('connect','connexion at GLA',45), A('fly','GLA → TRE',55), arr(15)])],
+      ['CAL', bfs([A('fly','BFS → GLA',40), A('connect','connexion at GLA',45), A('fly','GLA → CAL',40), arr(15)])],
+      ['LSI', bfs([A('fly','BFS → EDI',45), A('connect','connexion at EDI',45), A('fly','EDI → LSI',70), arr(20)])],
+      ['KOI', bfs([A('fly','BFS → EDI',45), A('connect','connexion at EDI',45), A('fly','EDI → KOI',60), arr(20)])],
+      ['WIC', bhd([A('fly','BHD → ABZ',60,{est:true}), A('connect','connexion at ABZ',45), A('fly','ABZ → WIC',40), arr(15)])],
+      ['NRL', bfs([A('fly','BFS → EDI',45), A('connect','connexion at EDI',45), A('fly','EDI → KOI',60),
+                   A('connect','connexion at Kirkwall',30), A('fly','KOI → NRL (islander)',15), arr(10)])],
+      ['PPW', bfs([A('fly','BFS → EDI',45), A('connect','connexion at EDI',45), A('fly','EDI → KOI',60),
+                   A('connect','connexion at Kirkwall',30), A('fly','KOI → PPW (islander)',15), arr(10)])],
+      ['NQY', bfs([A('fly','BFS → LGW',80), A('connect','connexion at LGW',60), A('fly','LGW → NQY',75), arr(25)])],
+      ['ISC', bfs([A('fly','BFS → LGW',80), A('connect','connexion at LGW',60), A('fly','LGW → NQY',75),
+                   A('connect','connexion at Newquay',40), A('fly','Skybus NQY → ISC',30), arr(10)])]
+    ] }
+];
+let ORIGIN = ORIGINS[0];          // the plate on display
+
+// scheduled ferries (and the two road bridges the coastline raster might miss)
+// [fromName, fromLat, fromLon, toName, toLat, toLon, crossingMin, ship, mode]
+const FERRIES = [
+  ['Portsmouth',50.7960,-1.1090,'Ryde, Isle of Wight',50.7340,-1.1590,22,'Wightlink FastCat'],
+  ['Lymington',50.7440,-1.5240,'Yarmouth, Isle of Wight',50.7060,-1.5000,40,'Wightlink'],
+  ['Southampton',50.8930,-1.4040,'West Cowes',50.7620,-1.2990,28,'Red Jet'],
+  ['Penzance',50.1150,-5.5310,'St Mary’s, Scilly',49.9180,-6.3170,165,'Scillonian III'],
+  ['Oban',56.4110,-5.4760,'Craignure, Mull',56.4710,-5.7060,46,'CalMac'],
+  ['Fionnphort, Mull',56.3250,-6.3690,'Iona',56.3320,-6.3950,10,'CalMac'],
+  ['Ardrossan',55.6400,-4.8210,'Brodick, Arran',55.5760,-5.1390,55,'CalMac'],
+  ['Wemyss Bay',55.8760,-4.8900,'Rothesay, Bute',55.8380,-5.0540,35,'CalMac'],
+  ['Largs',55.7950,-4.8670,'Great Cumbrae',55.7800,-4.8980,10,'CalMac'],
+  ['Kennacraig',55.8060,-5.4470,'Port Askaig, Islay',55.8480,-6.1050,125,'CalMac'],
+  ['Port Askaig, Islay',55.8480,-6.1050,'Feolin, Jura',55.8330,-6.0930,10,'Jura ferry'],
+  ['Tayinloan',55.6580,-5.6680,'Gigha',55.6810,-5.7350,20,'CalMac'],
+  ['Uig, Skye',57.5860,-6.3770,'Tarbert, Harris',57.8990,-6.8080,100,'CalMac'],
+  ['Ullapool',57.8950,-5.1630,'Stornoway, Lewis',58.2070,-6.3890,150,'CalMac'],
+  ['Leverburgh, Harris',57.7660,-7.0240,'Berneray',57.7130,-7.1800,60,'CalMac (Sound of Harris)'],
+  ['Eriskay',57.0690,-7.3070,'Ardmhòr, Barra',57.0260,-7.4180,40,'CalMac'],
+  ['Mallaig',57.0060,-5.8280,'Armadale, Skye',57.0640,-5.8940,45,'CalMac'],
+  ['Mallaig',57.0060,-5.8280,'Eigg',56.8770,-6.1300,75,'CalMac (Small Isles)'],
+  ['Mallaig',57.0060,-5.8280,'Rum',57.0110,-6.2630,100,'CalMac (Small Isles)'],
+  ['Oban',56.4110,-5.4760,'Colonsay',56.0690,-6.1880,135,'CalMac'],
+  ['Oban',56.4110,-5.4760,'Coll',56.6150,-6.5240,160,'CalMac'],
+  ['Scrabster',58.6110,-3.5430,'Stromness, Orkney',58.9650,-3.2960,90,'NorthLink'],
+  ['Gills Bay',58.6390,-3.1580,'St Margaret’s Hope',58.8310,-2.9590,60,'Pentland Ferries'],
+  ['Houton',58.9170,-3.1850,'Lyness, Hoy',58.8330,-3.1890,35,'Orkney Ferries'],
+  ['Kirkwall',58.9870,-2.9610,'Rapness, Westray',59.3230,-2.9650,85,'Orkney Ferries'],
+  ['Kirkwall',58.9870,-2.9610,'Sanday',59.2500,-2.5760,85,'Orkney Ferries'],
+  ['Kirkwall',58.9870,-2.9610,'Stronsay',59.1280,-2.6010,95,'Orkney Ferries'],
+  ['Aberdeen',57.1440,-2.0780,'Lerwick, Shetland',60.1540,-1.1430,745,'NorthLink (overnight)'],
+  ['Toft',60.4660,-1.2060,'Ulsta, Yell',60.4953,-1.1620,20,'Shetland ferries'],
+  ['Gutcher, Yell',60.6730,-0.9970,'Belmont, Unst',60.6870,-0.9620,10,'Shetland ferries'],
+  ['Lerwick',60.1540,-1.1430,'Bressay',60.1530,-1.1190,7,'Shetland ferries'],
+  ['Grutness',59.8830,-1.2880,'Fair Isle',59.5350,-1.6340,160,'Good Shepherd IV (thrice weekly)'],
+  ['Walls',60.2330,-1.5630,'Foula',60.1230,-2.0530,135,'Foula ferry (twice weekly)'],
+  ['Heysham',54.0320,-2.9170,'Douglas, Isle of Man',54.1460,-4.4760,225,'IoM Steam Packet'],
+  ['Liverpool',53.4280,-3.0190,'Douglas, Isle of Man',54.1460,-4.4760,165,'Manannan fast craft'],
+  ['Belfast',54.6180,-5.9050,'Douglas, Isle of Man',54.1460,-4.4760,165,'Steam Packet (seasonal)'],
+  ['Cairnryan',54.9740,-5.0190,'Larne',54.8470,-5.7930,120,'P&O'],
+  ['Cairnryan',54.9740,-5.0190,'Belfast',54.6180,-5.9050,140,'Stena Line'],
+  ['Bideford',51.0160,-4.2080,'Lundy',51.1780,-4.6680,120,'MS Oldenburg (seasonal)'],
+  ['Holyhead',53.3074,-4.6310,'Dublin Port',53.3494,-6.1980,195,'Irish Ferries / Stena'],
+  ['Fishguard',52.0110,-4.9860,'Rosslare',52.2540,-6.3380,210,'Stena Line'],
+  ['Pembroke Dock',51.6930,-4.9420,'Rosslare',52.2540,-6.3380,240,'Irish Ferries'],
+  ['Rossaveel',53.2670,-9.5610,'Kilronan, Aran Islands',53.1190,-9.6700,40,'Aran Island Ferries'],
+  ['Kyle of Lochalsh',57.2800,-5.7130,'Kyleakin, Skye',57.2710,-5.7440,5,'Skye Bridge','bridge'],
+  ['Bangor',53.2210,-4.1630,'Menai Bridge, Anglesey',53.2270,-4.1710,4,'Menai Bridge','bridge'],
+  // the Outer Hebrides causeways — one road from Berneray to Eriskay
+  ['Brae',60.3950,-1.3530,'Northmavine',60.4080,-1.3450,2,'Mavis Grind','bridge'],
+  ['Berneray',57.7130,-7.1800,'Otternish, North Uist',57.6900,-7.1850,5,'Berneray causeway','bridge'],
+  ['Carinish, North Uist',57.5160,-7.3000,'Gramsdale, Benbecula',57.4830,-7.3400,6,'North Ford causeway','bridge'],
+  ['Creagorry, Benbecula',57.4350,-7.3100,'Carnan, South Uist',57.4050,-7.3050,5,'South Ford causeway','bridge'],
+  ['Ludag, South Uist',57.1050,-7.3000,'Eriskay',57.0830,-7.2900,6,'Eriskay causeway','bridge']
+];
+
+// road friction: effective long-distance speed, then terrain provinces
+const ROAD = { baseKmh: 80, circuity: 1.3 };
+const ZONES = [
+  { name:'Greater London',       kmh:20, box:{ latMin:51.28, latMax:51.72, lonMin:-0.52, lonMax:0.34 } },
+  { name:'North-west Highlands', kmh:40, box:{ latMin:57.0, latMax:58.7, lonMin:-6.0, lonMax:-4.3 } },
+  { name:'Grampians',            kmh:48, box:{ latMin:56.5, latMax:57.3, lonMin:-5.0, lonMax:-2.9 } },
+  { name:'Lake District',        kmh:48, box:{ latMin:54.3, latMax:54.75, lonMin:-3.45, lonMax:-2.75 } },
+  { name:'Pennines',             kmh:55, box:{ latMin:53.9, latMax:55.1, lonMin:-2.6, lonMax:-1.9 } },
+  { name:'Snowdonia',            kmh:45, box:{ latMin:52.75, latMax:53.25, lonMin:-4.35, lonMax:-3.6 } },
+  { name:'Mid-Wales',            kmh:50, box:{ latMin:51.95, latMax:52.75, lonMin:-3.95, lonMax:-3.0 } },
+  { name:'Dartmoor',             kmh:45, box:{ latMin:50.42, latMax:50.68, lonMin:-4.15, lonMax:-3.72 } },
+  { name:'Outer Hebrides',       kmh:48, box:{ latMin:56.9, latMax:58.55, lonMin:-7.75, lonMax:-6.55 } },
+  { name:'Donegal',              kmh:55, box:{ latMin:54.6, latMax:55.3, lonMin:-8.8, lonMax:-7.3 } },
+  { name:'Connemara & Mayo',     kmh:55, box:{ latMin:53.3, latMax:54.4, lonMin:-10.3, lonMax:-8.8 } },
+  { name:'Kerry & West Cork',    kmh:55, box:{ latMin:51.6, latMax:52.4, lonMin:-10.6, lonMax:-9.0 } },
+  { name:'Wicklow Mountains',    kmh:60, box:{ latMin:52.8, latMax:53.2, lonMin:-6.7, lonMax:-6.2 } },
+  { name:'Shetland',             kmh:55, box:{ latMin:59.8, latMax:60.95, lonMin:-1.75, lonMax:-0.65 } },
+  { name:'Orkney',               kmh:55, box:{ latMin:58.7, latMax:59.45, lonMin:-3.55, lonMax:-2.3 } }
+];
+
+// gazetteer [name, lat, lon, pop] for the hover card and map labels
+const PLACES = [
+  ['London',51.5074,-0.1278,8900000],['Chester',53.1900,-2.8910,80000],
+  ['Birmingham',52.4862,-1.8904,1141000],['Manchester',53.4808,-2.2426,553000],
+  ['Glasgow',55.8642,-4.2518,612000],['Edinburgh',55.9533,-3.1883,540000],
+  ['Liverpool',53.4084,-2.9916,498000],['Leeds',53.8008,-1.5491,793000],
+  ['Sheffield',53.3811,-1.4701,584000],['Bristol',51.4545,-2.5879,467000],
+  ['Newcastle',54.9783,-1.6178,300000],['Nottingham',52.9548,-1.1581,330000],
+  ['Leicester',52.6369,-1.1398,355000],['Cardiff',51.4816,-3.1791,362000],
+  ['Belfast',54.5973,-5.9301,343000],['Aberdeen',57.1497,-2.0943,198000],
+  ['Dundee',56.4620,-2.9707,148000],['Inverness',57.4778,-4.2247,47000],
+  ['Perth',56.3950,-3.4308,47000],['Stirling',56.1165,-3.9369,37000],
+  ['Fort William',56.8198,-5.1052,10000],['Oban',56.4127,-5.4742,8500],
+  ['Thurso',58.5936,-3.5221,7900],['Wick',58.4390,-3.0950,7000],
+  ['Ullapool',57.8953,-5.1610,1500],['Portree, Skye',57.4125,-6.1944,2300],
+  ['Kyle of Lochalsh',57.2790,-5.7130,700],['Mallaig',57.0060,-5.8280,800],
+  ['Stornoway',58.2090,-6.3870,8000],['Tarbert, Harris',57.8970,-6.8020,500],
+  ['Balivanich, Benbecula',57.4570,-7.3700,500],['Castlebay, Barra',56.9530,-7.4880,1000],
+  ['Lerwick',60.1530,-1.1450,7000],['Kirkwall',58.9810,-2.9600,9000],
+  ['Stromness',58.9650,-3.2960,2200],['Campbeltown',55.4258,-5.6070,4800],
+  ['Bowmore, Islay',55.7560,-6.2890,900],['Tobermory, Mull',56.6230,-6.0640,1000],
+  ['Brodick, Arran',55.5760,-5.1390,600],['Rothesay, Bute',55.8380,-5.0540,4500],
+  ['Douglas',54.1500,-4.4820,28000],['Derry',54.9966,-7.3086,85000],
+  ['Enniskillen',54.3438,-7.6315,14000],['Newry',54.1751,-6.3402,27000],
+  ['Coleraine',55.1325,-6.6646,25000],['Omagh',54.5980,-7.3100,20000],
+  ['Armagh',54.3503,-6.6528,15000],['Bangor',54.6530,-5.6680,61000],
+  ['Carlisle',54.8925,-2.9329,75000],['Lancaster',54.0470,-2.8010,52000],
+  ['Preston',53.7632,-2.7031,141000],['Blackpool',53.8175,-3.0357,139000],
+  ['Kendal',54.3280,-2.7440,28000],['Keswick',54.6010,-3.1380,5000],
+  ['York',53.9590,-1.0815,153000],['Hull',53.7676,-0.3274,260000],
+  ['Scarborough',54.2830,-0.4000,61000],['Whitby',54.4863,-0.6133,13000],
+  ['Middlesbrough',54.5742,-1.2350,140000],['Durham',54.7761,-1.5733,48000],
+  ['Sunderland',54.9069,-1.3838,175000],['Bradford',53.7960,-1.7594,366000],
+  ['Doncaster',53.5228,-1.1285,110000],['Lincoln',53.2307,-0.5406,100000],
+  ['Norwich',52.6309,1.2974,144000],['Ipswich',52.0567,1.1482,145000],
+  ['Cambridge',52.2053,0.1218,146000],['Peterborough',52.5695,-0.2405,180000],
+  ['Oxford',51.7520,-1.2577,152000],['Reading',51.4543,-0.9781,175000],
+  ['Swindon',51.5558,-1.7797,185000],['Bath',51.3811,-2.3590,95000],
+  ['Gloucester',51.8642,-2.2380,130000],['Cheltenham',51.8994,-2.0783,117000],
+  ['Hereford',52.0567,-2.7160,53000],['Worcester',52.1920,-2.2200,100000],
+  ['Shrewsbury',52.7073,-2.7553,72000],['Stoke-on-Trent',53.0027,-2.1794,256000],
+  ['Derby',52.9225,-1.4746,255000],['Coventry',52.4068,-1.5197,345000],
+  ['Northampton',52.2405,-0.9027,225000],['Luton',51.8787,-0.4200,213000],
+  ['Milton Keynes',52.0406,-0.7594,230000],['Southend-on-Sea',51.5459,0.7077,180000],
+  ['Colchester',51.8959,0.8919,122000],['Chelmsford',51.7356,0.4685,111000],
+  ['Crawley',51.1092,-0.1872,118000],['Dungannon',54.5083,-6.7666,16000],
+  ['Dublin',53.3498,-6.2603,1170000],['Cork',51.8980,-8.4706,220000],
+  ['Galway',53.2740,-9.0490,80000],['Limerick',52.6638,-8.6267,94000],
+  ['Waterford',52.2593,-7.1101,54000],['Kilkenny',52.6540,-7.2448,27000],
+  ['Wexford',52.3369,-6.4633,21000],['Sligo',54.2766,-8.4761,20000],
+  ['Letterkenny',54.9560,-7.7340,20000],['Donegal',54.6540,-8.1100,2600],
+  ['Athlone',53.4230,-7.9410,22000],['Tralee',52.2710,-9.7010,24000],
+  ['Killarney',52.0599,-9.5040,14000],['Dundalk',54.0040,-6.4050,39000],
+  ['Drogheda',53.7190,-6.3470,41000],['Westport',53.8010,-9.5150,6000],
+  ['Ennis',52.8430,-8.9860,25000],['Clifden',53.4890,-10.0200,1600],
+  ['Dingle',52.1410,-10.2640,2000],['Rosslare',52.2540,-6.3380,1600],
+  ['Brighton',50.8225,-0.1372,290000],['Eastbourne',50.7680,0.2905,100000],
+  ['Hastings',50.8543,0.5735,92000],['Canterbury',51.2802,1.0789,55000],
+  ['Dover',51.1279,1.3134,31000],['Margate',51.3813,1.3862,61000],
+  ['Maidstone',51.2704,0.5227,113000],['Ashford',51.1480,0.8750,75000],
+  ['Portsmouth',50.8198,-1.0880,208000],['Southampton',50.9097,-1.4044,253000],
+  ['Winchester',51.0632,-1.3080,45000],['Bournemouth',50.7192,-1.8808,195000],
+  ['Weymouth',50.6144,-2.4547,53000],['Exeter',50.7184,-3.5339,130000],
+  ['Plymouth',50.3755,-4.1427,264000],['Torquay',50.4619,-3.5253,65000],
+  ['Truro',50.2632,-5.0510,19000],['Penzance',50.1186,-5.5371,21000],
+  ['Newquay',50.4120,-5.0757,20000],['St Ives',50.2110,-5.4800,11000],
+  ['Hugh Town, Scilly',49.9144,-6.3150,1000],['Barnstaple',51.0805,-4.0580,24000],
+  ['Taunton',51.0150,-3.1060,64000],['Salisbury',51.0688,-1.7945,40000],
+  ['Swansea',51.6214,-3.9436,246000],['Newport',51.5842,-2.9977,153000],
+  ['Carmarthen',51.8560,-4.3100,14000],['Haverfordwest',51.8020,-4.9700,14000],
+  ['St Davids',51.8820,-5.2690,1600],['Aberystwyth',52.4153,-4.0829,16000],
+  ['Bangor, Gwynedd',53.2274,-4.1293,18000],['Caernarfon',53.1400,-4.2700,9800],
+  ['Holyhead',53.3090,-4.6330,12000],['Wrexham',53.0466,-2.9930,65000],
+  ['Llandudno',53.3240,-3.8270,20000],['Newport, Isle of Wight',50.7010,-1.2883,25000],
+  ['Ryde',50.7300,-1.1620,24000],['Galashiels',55.6190,-2.8070,15000],
+  ['Dumfries',55.0700,-3.6030,33000],['Stranraer',54.9020,-5.0270,10000],
+  ['Ayr',55.4586,-4.6292,47000],['Aviemore',57.1940,-3.8270,3600],
+  ['Elgin',57.6490,-3.3150,23000],['Peterhead',57.5050,-1.7980,19000],
+  ['Fraserburgh',57.6930,-2.0050,13000],['St Andrews',56.3398,-2.7967,17000],
+  ['Berwick-upon-Tweed',55.7710,-2.0070,12000],['Larne',54.8510,-5.8100,18000],
+  ['Lisburn',54.5120,-6.0310,45000],['Ballymena',54.8640,-6.2760,29000]
+];
+// smaller places — they answer the hover but are never labelled on the plate
+const PLACES_MINOR = [
+  ['Aylesbury',51.8156,-0.8084,59000],['Banbury',52.0629,-1.3398,54000],['Basingstoke',51.2667,-1.0876,113000],
+  ['Bedford',52.1364,-0.4668,107000],['Beverley',53.8420,-0.4270,30000],['Blackburn',53.7480,-2.4820,117000],
+  ['Bolton',53.5780,-2.4290,195000],['Boston',52.9740,-0.0260,45000],['Bridlington',54.0830,-0.1920,35000],
+  ['Bridgwater',51.1280,-3.0040,41000],['Bude',50.8270,-4.5430,10000],['Burnley',53.7890,-2.2480,73000],
+  ['Bury St Edmunds',52.2460,0.7110,42000],['Buxton',53.2590,-1.9110,22000],['Camborne',50.2130,-5.3000,21000],
+  ['Chesterfield',53.2350,-1.4210,88000],['Chichester',50.8370,-0.7790,30000],['Chippenham',51.4580,-2.1160,36000],
+  ['Cirencester',51.7190,-1.9680,20000],['Colwyn Bay',53.2900,-3.7270,34000],['Crewe',53.0980,-2.4440,73000],
+  ['Cromer',52.9310,1.3020,8000],['Darlington',54.5270,-1.5530,93000],['Dorchester',50.7110,-2.4410,21000],
+  ['Ely',52.3990,0.2620,20000],['Evesham',52.0920,-1.9470,24000],['Exmouth',50.6190,-3.4130,35000],
+  ['Falmouth',50.1530,-5.0710,22000],['Felixstowe',51.9620,1.3510,24000],['Fishguard',52.0070,-4.9800,3400],
+  ['Folkestone',51.0810,1.1690,47000],['Glastonbury',51.1480,-2.7140,9000],['Grantham',52.9120,-0.6420,45000],
+  ['Great Yarmouth',52.6080,1.7300,39000],['Grimsby',53.5670,-0.0800,88000],['Guildford',51.2360,-0.5700,80000],
+  ['Harrogate',53.9920,-1.5410,76000],['Hartlepool',54.6900,-1.2120,88000],['Harwich',51.9450,1.2880,18000],
+  ['Hexham',54.9710,-2.1010,13000],['High Wycombe',51.6290,-0.7480,125000],['Horsham',51.0630,-0.3250,50000],
+  ['Huddersfield',53.6450,-1.7850,162000],['Ilfracombe',51.2080,-4.1240,11000],['Kettering',52.3980,-0.7260,63000],
+  ['Kidderminster',52.3880,-2.2490,55000],['King’s Lynn',52.7540,0.3980,42000],['Lewes',50.8730,0.0090,17000],
+  ['Liskeard',50.4540,-4.4650,9000],['Llanelli',51.6840,-4.1630,25000],['Loughborough',52.7720,-1.2060,64000],
+  ['Lowestoft',52.4810,1.7530,71000],['Ludlow',52.3680,-2.7180,11000],['Macclesfield',53.2580,-2.1270,52000],
+  ['Mansfield',53.1440,-1.1960,110000],['Matlock',53.1370,-1.5550,10000],['Minehead',51.2040,-3.4740,12000],
+  ['Morecambe',54.0730,-2.8700,34000],['Newark-on-Trent',53.0760,-0.8090,27000],['Newbury',51.4010,-1.3230,41000],
+  ['Newton Abbot',50.5290,-3.6100,26000],['Northallerton',54.3380,-1.4340,17000],['Nuneaton',52.5230,-1.4680,88000],
+  ['Okehampton',50.7390,-4.0040,7000],['Oswestry',52.8600,-3.0530,17000],['Padstow',50.5400,-4.9370,3000],
+  ['Penrith',54.6650,-2.7570,16000],['Pontypridd',51.6020,-3.3420,31000],['Poole',50.7150,-1.9870,151000],
+  ['Porthmadog',52.9270,-4.1330,4000],['Pwllheli',52.8890,-4.4170,4000],['Ramsgate',51.3360,1.4160,40000],
+  ['Redruth',50.2330,-5.2240,14000],['Rhyl',53.3210,-3.4910,26000],['Richmond, Yorkshire',54.4030,-1.7370,8000],
+  ['Ripon',54.1380,-1.5240,17000],['Rugby',52.3700,-1.2650,78000],['Scunthorpe',53.5890,-0.6540,83000],
+  ['Sidmouth',50.6800,-3.2390,13000],['Skegness',53.1440,0.3360,20000],['Skipton',53.9620,-2.0170,15000],
+  ['Slough',51.5110,-0.5950,164000],['Southport',53.6470,-3.0050,91000],['St Albans',51.7520,-0.3390,148000],
+  ['St Austell',50.3400,-4.7900,23000],['Stafford',52.8060,-2.1160,71000],['Stamford',52.6520,-0.4840,20000],
+  ['Stevenage',51.9020,-0.2010,88000],['Stratford-upon-Avon',52.1920,-1.7080,30000],['Stroud',51.7450,-2.2150,33000],
+  ['Tavistock',50.5480,-4.1440,12000],['Telford',52.6780,-2.4450,155000],['Tenby',51.6730,-4.7030,5000],
+  ['Thetford',52.4130,0.7440,25000],['Tiverton',50.9030,-3.4880,20000],['Totnes',50.4320,-3.6840,9000],
+  ['Trowbridge',51.3200,-2.2080,33000],['Tunbridge Wells',51.1320,0.2630,59000],['Ulverston',54.1950,-3.0960,12000],
+  ['Wakefield',53.6830,-1.4990,100000],['Warwick',52.2820,-1.5900,37000],['Watford',51.6560,-0.3900,90000],
+  ['Wells',51.2090,-2.6470,12000],['Welshpool',52.6600,-3.1470,6000],['Weston-super-Mare',51.3460,-2.9770,82000],
+  ['Whitehaven',54.5480,-3.5840,23000],['Wigan',53.5450,-2.6370,103000],['Windermere',54.3800,-2.9070,8000],
+  ['Wisbech',52.6660,0.1600,31000],['Woking',51.3190,-0.5580,103000],['Workington',54.6430,-3.5440,25000],
+  ['Worthing',50.8180,-0.3720,110000],['Yeovil',50.9420,-2.6330,45000],
+  ['Brecon',51.9470,-3.3910,8000],['Cardigan',52.0830,-4.6600,4000],['Dolgellau',52.7440,-3.8830,2800],
+  ['Lampeter',52.1130,-4.0800,3000],['Llandrindod Wells',52.2410,-3.3780,5000],['Llangollen',52.9700,-3.1710,3600],
+  ['Machynlleth',52.5910,-3.8510,2200],['Merthyr Tydfil',51.7480,-3.3780,43000],['Monmouth',51.8120,-2.7160,10000],
+  ['Newtown',52.5130,-3.3140,11000],
+  ['Ballater',57.0500,-3.0400,1500],['Braemar',57.0060,-3.3960,500],['Callander',56.2440,-4.2140,3000],
+  ['Crieff',56.3730,-3.8390,7000],['Dingwall',57.5960,-4.4290,5500],['Dornoch',57.8800,-4.0280,1200],
+  ['Dumbarton',55.9450,-4.5650,20000],['Dunbar',56.0020,-2.5160,8000],['Dunfermline',56.0720,-3.4520,50000],
+  ['Durness',58.5680,-4.7450,400],['Forfar',56.6440,-2.8880,14000],['Fort Augustus',57.1440,-4.6800,600],
+  ['Gairloch',57.7240,-5.6890,700],['Girvan',55.2410,-4.8530,6400],['Glencoe',56.6830,-5.1010,400],
+  ['Grantown-on-Spey',57.3300,-3.6080,2500],['Greenock',55.9480,-4.7610,41000],['Hawick',55.4220,-2.7860,13000],
+  ['Inveraray',56.2310,-5.0730,600],['John o’ Groats',58.6370,-3.0700,300],['Kelso',55.5980,-2.4340,6000],
+  ['Kingussie',57.0790,-4.0530,1500],['Kirkcaldy',56.1100,-3.1600,50000],['Lairg',58.0270,-4.4010,900],
+  ['Lochinver',58.1450,-5.2440,600],['Moffat',55.3330,-3.4400,2500],['Montrose',56.7080,-2.4670,12000],
+  ['Nairn',57.5860,-3.8680,10000],['Peebles',55.6520,-3.1890,9000],['Pitlochry',56.7040,-3.7330,2800],
+  ['Tarbert, Kintyre',55.8660,-5.4110,1100],['Tongue',58.4730,-4.4180,200],
+  ['Port Ellen, Islay',55.6280,-6.1900,900],['Craighouse, Jura',55.8330,-5.9500,200],
+  ['Scalasaig, Colonsay',56.0660,-6.1880,100],['Arinagour, Coll',56.6210,-6.5230,200],
+  ['Scarinish, Tiree',56.5000,-6.8060,700],['Lochboisdale',57.1530,-7.3070,300],
+  ['Lochmaddy',57.5980,-7.1610,300],['Leverburgh',57.7660,-7.0240,200],
+  ['Millport, Cumbrae',55.7520,-4.9260,1200],['Lamlash, Arran',55.5360,-5.1280,1000],
+  ['Lochranza, Arran',55.7060,-5.3010,200],['Craignure, Mull',56.4710,-5.7060,200],
+  ['Baltasound, Unst',60.7620,-0.8540,700],['Mid Yell',60.5970,-1.0570,300],
+  ['Scalloway',60.1370,-1.2770,1200],['Brae',60.3950,-1.3530,700],
+  ['Pierowall, Westray',59.3230,-2.9740,500],['St Margaret’s Hope',58.8310,-2.9590,500],
+  ['Sandown',50.6550,-1.1540,12000],['Ventnor',50.5940,-1.2080,6000],['Cowes',50.7630,-1.2980,10000],
+  ['Freshwater',50.6840,-1.5250,7000],['Castletown',54.0740,-4.6530,3100],['Peel',54.2230,-4.6920,5500],
+  ['Ramsey, Isle of Man',54.3220,-4.3810,8000],['Port Erin',54.0850,-4.7520,3500],
+  ['Antrim',54.7180,-6.2080,24000],['Ballycastle',55.2040,-6.2370,5500],['Banbridge',54.3480,-6.2700,17000],
+  ['Carrickfergus',54.7160,-5.8060,28000],['Cookstown',54.6420,-6.7450,12000],['Downpatrick',54.3290,-5.7150,11000],
+  ['Kilkeel',54.0600,-5.9900,6500],['Limavady',55.0510,-6.9490,12000],['Magherafelt',54.7550,-6.6080,9000],
+  ['Newcastle, Co. Down',54.2180,-5.8900,8000],['Portrush',55.2050,-6.6570,7000],['Strabane',54.8270,-7.4630,13000],
+  ['Arklow',52.7930,-6.1410,13000],['Ballina',54.1140,-9.1550,10000],['Bantry',51.6810,-9.4540,2800],
+  ['Bray',53.2010,-6.1110,33000],['Carlow',52.8370,-6.9260,24000],['Castlebar',53.8570,-9.2980,13000],
+  ['Cavan',53.9900,-7.3610,11000],['Clonmel',52.3540,-7.7000,17000],['Cobh',51.8500,-8.2940,13000],
+  ['Dungarvan',52.0880,-7.6240,10000],['Kenmare',51.8800,-9.5830,2400],['Kinsale',51.7060,-8.5310,5300],
+  ['Longford',53.7270,-7.7930,10000],['Mallow',52.1390,-8.6530,12000],['Monaghan',54.2480,-6.9680,7700],
+  ['Mullingar',53.5260,-7.3380,21000],['Navan',53.6520,-6.6810,30000],['Nenagh',52.8610,-8.1970,9000],
+  ['Portlaoise',53.0340,-7.3010,23000],['Roscommon',53.6280,-8.1890,5900],['Shannon',52.7040,-8.8640,10000],
+  ['Skibbereen',51.5590,-9.2630,2800],['Tipperary',52.4740,-8.1620,5000],['Tuam',53.5140,-8.8560,8700],
+  ['Tullamore',53.2740,-7.4930,15000],['Youghal',51.9510,-7.8500,8000],['Bundoran',54.4780,-8.2830,2000],
+  ['Belmullet',54.2230,-9.9890,1000],['Buncrana',55.1360,-7.4530,7000],['Kilronan, Aran Islands',53.1190,-9.6700,300]
+];
+const GAZ = PLACES.concat(PLACES_MINOR);
+const OCEANS = [
+  { n: 'ATLANTIC OCEAN', lon: -8.6, lat: 56.45 }, { n: 'NORTH SEA', lon: 1.4, lat: 56.4 },
+  { n: 'IRISH SEA', lon: -4.7, lat: 53.7 }, { n: 'ENGLISH CHANNEL', lon: -0.8, lat: 49.98 },
+  { n: 'CELTIC SEA', lon: -7.6, lat: 50.6 }
+];
+
+/* ============================================================ engine */
+const R = 6371, rad = d => d * Math.PI / 180;
+function havKm(la1, lo1, la2, lo2) {
+  const p = Math.sin(rad(la2 - la1) / 2) ** 2 +
+    Math.cos(rad(la1)) * Math.cos(rad(la2)) * Math.sin(rad(lo2 - lo1) / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(p));
+}
+function fmtMin(m) {
+  if (m == null || !isFinite(m)) return '—';
+  const h = Math.floor(m / 60), mm = Math.round(m % 60);
+  if (h === 0) return `${mm} min`;
+  if (h >= 48) return `${(m / 1440).toFixed(1)} days`;
+  return mm ? `${h} h ${String(mm).padStart(2, '0')}` : `${h} h`;
+}
+// multi-source Dijkstra over the lat/lon grid — clamped at the plate edges (no wrap)
+function gridDijkstra(speed, seeds, onProgress) {
+  const { W, H, latTop, cell } = GRID;
+  const time = new Float32Array(N).fill(Infinity);
+  const src = new Int32Array(N).fill(-1);
+  const kmRow = 111.32 * cell;
+  const cosLat = new Float32Array(H);
+  for (let r = 0; r < H; r++) cosLat[r] = Math.max(0.05, Math.cos((latTop - (r + 0.5) * cell) * Math.PI / 180));
+  let hk = new Float64Array(1 << 16), hi = new Int32Array(1 << 16), hn = 0;
+  const grow = () => { const k2 = new Float64Array(hk.length * 2), i2 = new Int32Array(hi.length * 2); k2.set(hk); i2.set(hi); hk = k2; hi = i2; };
+  const push = (k, i) => {
+    if (hn === hk.length) grow();
+    let c = hn++; hk[c] = k; hi[c] = i;
+    while (c > 0) { const p = (c - 1) >> 1; if (hk[p] <= hk[c]) break; const tk = hk[p]; hk[p] = hk[c]; hk[c] = tk; const ti = hi[p]; hi[p] = hi[c]; hi[c] = ti; c = p; }
+  };
+  const pop = () => {
+    const k = hk[0], i = hi[0]; hn--;
+    if (hn > 0) {
+      hk[0] = hk[hn]; hi[0] = hi[hn];
+      let c = 0;
+      for (;;) {
+        let l = c * 2 + 1, r2 = l + 1, m = c;
+        if (l < hn && hk[l] < hk[m]) m = l;
+        if (r2 < hn && hk[r2] < hk[m]) m = r2;
+        if (m === c) break;
+        const tk = hk[m]; hk[m] = hk[c]; hk[c] = tk; const ti = hi[m]; hi[m] = hi[c]; hi[c] = ti; c = m;
+      }
+    }
+    return [k, i];
+  };
+  for (let s = 0; s < seeds.length; s++) {
+    const sd = seeds[s];
+    const r = Math.floor((latTop - sd.lat) / cell), c = Math.floor((sd.lon - GRID.lonMin) / cell);
+    if (r < 0 || r >= H || c < 0 || c >= W) continue;
+    const i = r * W + c;
+    if (sd.min < time[i]) { time[i] = sd.min; src[i] = s; push(time[i], i); }
+  }
+  let pops = 0;
+  while (hn > 0) {
+    const [k, i] = pop();
+    if (k > time[i]) continue;
+    if (onProgress && (++pops & 0x3FFF) === 0) onProgress(pops / N);
+    const r = (i / W) | 0, c = i % W;
+    const kmCol = kmRow * cosLat[r];
+    for (let dr = -1; dr <= 1; dr++) {
+      const nr = r + dr;
+      if (nr < 0 || nr >= H) continue;
+      for (let dc = -1; dc <= 1; dc++) {
+        if (!dr && !dc) continue;
+        const nc = c + dc;
+        if (nc < 0 || nc >= W) continue;
+        const j = nr * W + nc;
+        const sv = speed[j];
+        if (sv === 0) continue;
+        const dist = Math.sqrt((dr * kmRow) ** 2 + (dc * kmCol) ** 2);
+        const nt = k + dist * ROAD.circuity / sv * 60;
+        if (nt < time[j]) { time[j] = nt; src[j] = src[i]; push(time[j], j); }
+      }
+    }
+  }
+  return { time, src };
+}
+
+/* ============================================================ static grid */
+let landMask, ukMask, isoGrid, speedGrid, coastDist;
+let geoAll, geoUK;
+function buildStaticGrid() {
+  const { W, H } = GRID;
+  geoAll = window.UK_GEO;
+  geoUK = { type:'FeatureCollection', features: geoAll.features.filter(f => f.properties.iso === 'GB' || f.properties.iso === 'IM') };
+  const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+  const ctx = cv.getContext('2d', { willReadFrequently: true });
+  const tf = d3.geoTransform({ point(lon, lat) {
+    this.stream.point((lon - GRID.lonMin) / GRID.cell, (GRID.latTop - lat) / GRID.cell);
+  }});
+  const path = d3.geoPath(tf, ctx);
+  landMask = new Uint8Array(N); ukMask = new Uint8Array(N); isoGrid = new Array(N).fill('');
+  for (const f of geoAll.features) {
+    ctx.clearRect(0, 0, W, H);
+    // fill only — a coastline stroke would bridge narrow straits (the Solent,
+    // the Sound of Mull) and let roads drive across the sea. Islets smaller
+    // than a cell still appear: their air/ferry seeds paint as tinted dots.
+    ctx.fillStyle = '#fff';
+    ctx.beginPath(); path(f); ctx.fill();
+    const img = ctx.getImageData(0, 0, W, H).data;
+    const uk = f.properties.iso === 'GB' || f.properties.iso === 'IM' || f.properties.iso === 'IE';
+    for (let i = 0; i < N; i++) {
+      if (img[i * 4 + 3] > 110) {
+        landMask[i] = 1; isoGrid[i] = f.properties.iso;
+        if (uk) ukMask[i] = 1;
+      }
+    }
+  }
+  speedGrid = new Float32Array(N);
+  for (let i = 0; i < N; i++) speedGrid[i] = ukMask[i] ? ROAD.baseKmh : 0;
+  // terrain provinces as smoothed ellipses so slow zones blend, not print as boxes
+  for (const z of ZONES) {
+    const b = z.box;
+    const cLat = (b.latMin + b.latMax) / 2, cLon = (b.lonMin + b.lonMax) / 2;
+    const rLat = (b.latMax - b.latMin) / 2, rLon = (b.lonMax - b.lonMin) / 2;
+    const r0 = Math.max(0, Math.floor((GRID.latTop - b.latMax) / GRID.cell)),
+          r1 = Math.min(GRID.H - 1, Math.floor((GRID.latTop - b.latMin) / GRID.cell)),
+          c0 = Math.max(0, Math.floor((b.lonMin - GRID.lonMin) / GRID.cell)),
+          c1 = Math.min(GRID.W - 1, Math.floor((b.lonMax - GRID.lonMin) / GRID.cell));
+    for (let r = r0; r <= r1; r++) for (let c = c0; c <= c1; c++) {
+      const i = r * GRID.W + c;
+      if (!ukMask[i]) continue;
+      const lat = GRID.latTop - (r + 0.5) * GRID.cell, lon = GRID.lonMin + (c + 0.5) * GRID.cell;
+      const d = ((lat - cLat) / rLat) ** 2 + ((lon - cLon) / rLon) ** 2;
+      if (d >= 1) continue;
+      const f = d < 0.45 ? 0 : (d - 0.45) / 0.55;
+      const v = z.kmh + (speedGrid[i] - z.kmh) * f * f;
+      speedGrid[i] = Math.min(speedGrid[i], v);
+    }
+  }
+  // coast distance, for suppressing coast-hugging contour strokes
+  coastDist = new Int16Array(N).fill(9999);
+  let frontier = [];
+  for (let i = 0; i < N; i++) if (!landMask[i]) { coastDist[i] = 0; frontier.push(i); }
+  let d = 0;
+  while (frontier.length && d < 6) {
+    const nxt = []; d++;
+    for (const i of frontier) {
+      const r = (i / GRID.W) | 0, c = i % GRID.W;
+      for (let dr = -1; dr <= 1; dr++) for (let dc = -1; dc <= 1; dc++) {
+        const nr = r + dr, nc = c + dc;
+        if (nr < 0 || nr >= GRID.H || nc < 0 || nc >= GRID.W) continue;
+        const j = nr * GRID.W + nc;
+        if (coastDist[j] > d) { coastDist[j] = d; nxt.push(j); }
+      }
+    }
+    frontier = nxt;
+  }
+}
+
+/* ============================================================ seeds */
+// rail Dijkstra over the researched network; the first boarding's dwell is
+// absorbed into the 20-minute station buffer (seed at access+2, +18 on board)
+function railSeeds(origin, airSeeds) {
+  const DWELL = 18, ENTRY_SLACK = 18;
+  const nodes = RAIL_NODES.map(([id, n, la, lo]) => ({ id, n, la, lo }));
+  const idx = new Map(nodes.map((n, i) => [n.id, i]));
+  const M = nodes.length;
+  const time = new Float64Array(M).fill(Infinity);
+  const from = new Int32Array(M).fill(-1);
+  const base = new Array(M);
+  for (const [id, acc] of Object.entries(origin.termini)) {
+    const i = idx.get(id);
+    if (i == null) continue;
+    const t = acc.min + 20 - ENTRY_SLACK;
+    if (t < time[i]) {
+      time[i] = t; base[i] = { min: t, legs: [
+        { k: 'access', label: acc.label, min: acc.min },
+        { k: 'checkin', label: 'station buffer', min: 20 - ENTRY_SLACK }
+      ]};
+    }
+  }
+  // fly somewhere, then ride the railway onward
+  for (const s of airSeeds) {
+    for (let i = 0; i < M; i++) {
+      if (havKm(s.lat, s.lon, nodes[i].la, nodes[i].lo) > 28) continue;
+      const t = s.min + 40 - ENTRY_SLACK;
+      if (t < time[i]) {
+        time[i] = t; from[i] = -1;
+        base[i] = { min: t, legs: [...s.legs, { k: 'connect', label: `to the station, ${nodes[i].n}`, min: 40 - ENTRY_SLACK }] };
+      }
+    }
+  }
+  const adj = Array.from({ length: M }, () => []);
+  for (const [a, b, m] of RAIL_EDGES) {
+    const i = idx.get(a), j = idx.get(b);
+    if (i == null || j == null) { console.warn('unknown rail node', a, b); continue; }
+    adj[i].push([j, m]); adj[j].push([i, m]);
+  }
+  const done = new Uint8Array(M);
+  for (;;) {
+    let u = -1, best = Infinity;
+    for (let i = 0; i < M; i++) if (!done[i] && time[i] < best) { best = time[i]; u = i; }
+    if (u < 0) break;
+    done[u] = 1;
+    for (const [v, m] of adj[u]) {
+      const t = time[u] + DWELL + m;
+      if (t < time[v]) { time[v] = t; from[v] = u; base[v] = base[u]; }
+    }
+  }
+  const seeds = [];
+  // the access rides themselves are journeys (Crawley → Victoria): seed the
+  // termini directly — for an origin already in town the road spread wins anyway
+  for (const [id, acc] of Object.entries(origin.termini)) {
+    const i = idx.get(id);
+    if (i == null) continue;
+    seeds.push({
+      lat: nodes[i].la, lon: nodes[i].lo, min: acc.min + 5, kind: 'rail', name: `${nodes[i].n} (by rail)`,
+      legs: [{ k: 'rail', label: acc.label, min: acc.min }, { k: 'arrive', label: 'out to the street', min: 5 }]
+    });
+  }
+  nodes.forEach((n, i) => {
+    if (!isFinite(time[i]) || from[i] < 0) return;       // unreached, or no rail ridden
+    const chain = [];
+    for (let c = i; c >= 0; c = from[c]) chain.push(nodes[c].n);
+    chain.reverse();
+    const railMin = time[i] - base[i].min;
+    const via = chain.length > 2 ? ` via ${chain.slice(0, -1).join(' – ')}` : ` from ${chain[0]}`;
+    seeds.push({
+      lat: n.la, lon: n.lo, min: time[i] + 8, kind: 'rail', name: `${n.n} (by rail)`,
+      legs: [...base[i].legs, { k: 'rail', label: `by rail to ${n.n}${via}`, min: railMin },
+             { k: 'arrive', label: 'out to the street', min: 8 }]
+    });
+  });
+  return seeds;
+}
+
+const cellOf = (lat, lon) => {
+  const r = Math.floor((GRID.latTop - lat) / GRID.cell), c = Math.floor((lon - GRID.lonMin) / GRID.cell);
+  return (r < 0 || r >= GRID.H || c < 0 || c >= GRID.W) ? -1 : r * GRID.W + c;
+};
+// snap a ferry arrival to the cell it actually improves. Candidate cells must
+// lie on the FAR side of the crossing (project past the midpoint of the
+// from→to vector) — radius alone can't tell the island from the shore we
+// sailed from when the strait is a cell or two wide. A bare sea cell is
+// allowed only for sub-cell islets nothing nearby already serves.
+function ferryTarget(fla, flo, tla, tlo, cand, time) {
+  const i0 = cellOf(tla, tlo);
+  if (i0 < 0) return -1;
+  const r0 = (i0 / GRID.W) | 0, c0 = i0 % GRID.W;
+  const cosL = Math.cos(rad((fla + tla) / 2));
+  const vx = (tlo - flo) * cosL, vy = tla - fla;
+  const L2 = vx * vx + vy * vy;
+  let bestLand = -1, bestD = 1e9, anyCheaper = false;
+  for (let dr = -3; dr <= 3; dr++) for (let dc = -3; dc <= 3; dc++) {
+    const nr = r0 + dr, nc = c0 + dc;
+    if (nr < 0 || nr >= GRID.H || nc < 0 || nc >= GRID.W) continue;
+    const j = nr * GRID.W + nc;
+    if (time[j] < cand - 3) {
+      if (Math.abs(dr) <= 1 && Math.abs(dc) <= 1) anyCheaper = true;
+      continue;
+    }
+    if (!ukMask[j] || cand >= time[j] - 3) continue;
+    const clat = GRID.latTop - (nr + 0.5) * GRID.cell, clon = GRID.lonMin + (nc + 0.5) * GRID.cell;
+    const px = (clon - flo) * cosL, py = clat - fla;
+    if (L2 > 1e-9 && (px * vx + py * vy) / L2 < 0.55) continue;
+    const dx = (clon - tlo) * cosL, dy = clat - tla;
+    const d = dx * dx + dy * dy;
+    if (d < bestD) { bestD = d; bestLand = j; }
+  }
+  if (bestLand >= 0) return bestLand;
+  if (!anyCheaper && cand < (isFinite(time[i0]) ? time[i0] : Infinity) - 3) return i0;
+  return -1;
+}
+
+// best reached cell to board from: near the from-pier AND on the near side of
+// the crossing (else the search bleeds across the strait and the journey
+// narrative boards from the shore it was supposed to be sailing to)
+function ferrySource(fla, flo, tla, tlo, time) {
+  const i0 = cellOf(fla, flo);
+  if (i0 < 0) return -1;
+  const r0 = (i0 / GRID.W) | 0, c0 = i0 % GRID.W;
+  const cosL = Math.cos(rad((fla + tla) / 2));
+  const vx = (tlo - flo) * cosL, vy = tla - fla;
+  const L2 = vx * vx + vy * vy;
+  let best = -1;
+  for (let dr = -3; dr <= 3; dr++) for (let dc = -3; dc <= 3; dc++) {
+    const nr = r0 + dr, nc = c0 + dc;
+    if (nr < 0 || nr >= GRID.H || nc < 0 || nc >= GRID.W) continue;
+    const j = nr * GRID.W + nc;
+    if (!isFinite(time[j])) continue;
+    const clat = GRID.latTop - (nr + 0.5) * GRID.cell, clon = GRID.lonMin + (nc + 0.5) * GRID.cell;
+    const px = (clon - flo) * cosL, py = clat - fla;
+    if (L2 > 1e-9 && (px * vx + py * vy) / L2 > 0.45) continue;
+    if (best < 0 || time[j] < time[best]) best = j;
+  }
+  return best;
+}
+
+// after the boats and roads have done their work, the railway can still carry
+// the journey onward: land at Holyhead or Cairnryan and ride to the cities.
+// Boards at any station the grid has reached; emits only genuine improvements.
+function railOnward(res, seedList) {
+  const DWELL = 18;
+  const nodes = RAIL_NODES.map(([id, n, la, lo]) => ({ id, n, la, lo }));
+  const idx = new Map(nodes.map((n, i) => [n.id, i]));
+  const M = nodes.length;
+  const time = new Float64Array(M).fill(Infinity);
+  const from = new Int32Array(M).fill(-1);
+  const base = new Array(M);
+  const nodeCell = new Int32Array(M).fill(-1);
+  nodes.forEach((n, i) => {
+    const c0 = cellOf(n.la, n.lo);
+    if (c0 < 0) return;
+    const r0 = (c0 / GRID.W) | 0, cc0 = c0 % GRID.W;
+    let bi = -1;
+    for (let dr = -2; dr <= 2; dr++) for (let dc = -2; dc <= 2; dc++) {
+      const nr = r0 + dr, nc = cc0 + dc;
+      if (nr < 0 || nr >= GRID.H || nc < 0 || nc >= GRID.W) continue;
+      const j = nr * GRID.W + nc;
+      if (isFinite(res.time[j]) && (bi < 0 || res.time[j] < res.time[bi])) bi = j;
+    }
+    nodeCell[i] = bi;
+    if (bi < 0) return;
+    const s = seedList[res.src[bi]];
+    const tail = res.time[bi] - s.min;
+    const legs = [...s.legs];
+    if (tail > 4) legs.push({ k: 'drive', label: `onward by road to ${n.n} station`, min: tail });
+    legs.push({ k: 'checkin', label: 'station buffer', min: 2 });
+    time[i] = res.time[bi] + 2;            // +18 first-boarding dwell makes the full 20
+    base[i] = { min: time[i], legs };
+  });
+  const adj = Array.from({ length: M }, () => []);
+  for (const [a, b, m] of RAIL_EDGES) {
+    const i = idx.get(a), j = idx.get(b);
+    if (i == null || j == null) continue;
+    adj[i].push([j, m]); adj[j].push([i, m]);
+  }
+  const done = new Uint8Array(M);
+  for (;;) {
+    let u = -1, best = Infinity;
+    for (let i = 0; i < M; i++) if (!done[i] && time[i] < best) { best = time[i]; u = i; }
+    if (u < 0) break;
+    done[u] = 1;
+    for (const [v, m] of adj[u]) {
+      const t = time[u] + DWELL + m;
+      if (t < time[v]) { time[v] = t; from[v] = u; base[v] = base[u]; }
+    }
+  }
+  const seeds = [];
+  nodes.forEach((n, i) => {
+    if (!isFinite(time[i]) || from[i] < 0) return;
+    const cur = nodeCell[i] >= 0 ? res.time[nodeCell[i]] : Infinity;
+    if (time[i] + 8 >= cur - 8) return;    // no better than what already stands
+    const chain = [];
+    for (let c = i; c >= 0; c = from[c]) chain.push(nodes[c].n);
+    chain.reverse();
+    const railMin = time[i] - base[i].min;
+    const via = chain.length > 2 ? ` via ${chain.slice(0, -1).join(' – ')}` : ` from ${chain[0]}`;
+    seeds.push({
+      lat: n.la, lon: n.lo, min: time[i] + 8, kind: 'rail', name: `${n.n} (by rail)`,
+      legs: [...base[i].legs, { k: 'rail', label: `by rail to ${n.n}${via}`, min: railMin },
+             { k: 'arrive', label: 'out to the street', min: 8 }]
+    });
+  });
+  return seeds;
+}
+
+let state = null;          // the displayed plate: { time, src, seedList, contours }
+async function computeAll(origin, surface) {
+  const airSeeds = surface ? [] : origin.air.map(([iata, legs]) =>
+    ({ iata, name: AP[iata][0], lat: AP[iata][1], lon: AP[iata][2], legs, min: legsum(legs) }));
+  const seedList = [{ lat: origin.lat, lon: origin.lon, min: 0, legs: [], name: origin.name, kind: 'origin' }];
+  for (const s of airSeeds) seedList.push({ lat: s.lat, lon: s.lon, min: s.min, legs: s.legs, kind: 'air', name: s.name });
+  for (const s of railSeeds(origin, airSeeds)) seedList.push(s);
+  setProgress(0.05); await frame();
+
+  let res = gridDijkstra(speedGrid, seedList, f => setProgress(0.05 + f * 0.4));
+  // ferries: board where the road has reached, sail, re-run — until nothing improves.
+  // The "already reached?" test reads ONLY the destination's exact cell: a windowed
+  // search would see the opposite shore of a narrow strait and skip the crossing.
+  const applied = new Map();         // ferry+direction → best candidate applied
+  const ferryPass = () => {
+    let changed = false;
+    for (const [an, ala, alo, bn, bla, blo, min, ship, mode] of FERRIES) {
+      for (const [fn, fla, flo, tn, tla, tlo] of [[an, ala, alo, bn, bla, blo], [bn, bla, blo, an, ala, alo]]) {
+        const pi = ferrySource(fla, flo, tla, tlo, res.time);
+        if (pi < 0) continue;
+        const buf = mode === 'bridge' ? 0 : 35;
+        const cand = res.time[pi] + buf + min;
+        const prev = applied.get(fn + '→' + tn) ?? Infinity;
+        if (cand >= prev - 3) continue;
+        const tj = ferryTarget(fla, flo, tla, tlo, cand, res.time);
+        if (tj < 0) continue;
+        applied.set(fn + '→' + tn, cand);
+        const s = seedList[res.src[pi]];
+        const tail = res.time[pi] - s.min;
+        const legs = [...s.legs];
+        if (tail > 4) legs.push({ k: 'drive', label: `onward by road to ${fn}`, min: tail });
+        if (buf) legs.push({ k: 'checkin', label: `at the pier, ${fn}`, min: buf });
+        legs.push({ k: mode === 'bridge' ? 'drive' : 'ship', label: mode === 'bridge' ? `across the ${ship}` : `${ship} to ${tn}`, min });
+        seedList.push({
+          lat: GRID.latTop - (((tj / GRID.W) | 0) + 0.5) * GRID.cell,
+          lon: GRID.lonMin + ((tj % GRID.W) + 0.5) * GRID.cell,
+          min: cand, legs, kind: mode === 'bridge' ? 'road' : 'sea', name: tn
+        });
+        changed = true;
+      }
+    }
+    return changed;
+  };
+  for (let pass = 0; pass < 4; pass++) {
+    if (!ferryPass()) break;
+    setProgress(0.5 + pass * 0.1); await frame();
+    res = gridDijkstra(speedGrid, seedList, null);
+  }
+  // having sailed, ride the railway onward (Holyhead → London, Ayr → Glasgow);
+  // the new rail reach may in turn unlock further sailings (Aberdeen's boat)
+  const onward = railOnward(res, seedList);
+  if (onward.length) {
+    seedList.push(...onward);
+    setProgress(0.92); await frame();
+    res = gridDijkstra(speedGrid, seedList, null);
+    if (ferryPass()) res = gridDijkstra(speedGrid, seedList, null);
+  }
+  const st = { time: res.time, src: res.src, seedList };
+  // highest band that actually occurs — the legend shows no idle colours
+  let maxT = 0;
+  for (let i = 0; i < N; i++) { const t = res.time[i]; if (isFinite(t) && t > maxT) maxT = t; }
+  st.maxBand = bandOf(maxT);
+  computeContours(st);
+  return st;
+}
+
+/* ============================================================ plates: tabs & selection */
+const cache = new Map();           // origin id → computed state
+let selecting = false;
+async function select(id) {
+  if (selecting) return;
+  const o = ORIGINS.find(x => x.id === id) || ORIGINS[0];
+  selecting = true;
+  try {
+    for (const b of document.querySelectorAll('#tabs .tab')) b.setAttribute('aria-pressed', String(b.dataset.id === o.id));
+    if (location.hash !== '#' + o.id) location.hash = o.id;
+    unpin(); hideReadout();
+    ORIGIN = o;
+    const key = o.id + ':' + modelMode;
+    let st = cache.get(key);
+    if (!st) {
+      showProgress(`computing passage times from ${o.name}${modelMode === 'surface' ? ' — by rail & sail, no aëroplane' : ''}`);
+      await frame();
+      st = await computeAll(o, modelMode === 'surface');
+      cache.set(key, st);
+      hideProgress();
+    }
+    state = st;
+    legendEl.innerHTML = legendHTML();
+    // console handle for checking the model: IPC.at(lat, lon) → {min, seed}
+    window.IPC = { state: st, cellOf, fmtMin, view, get L() { return L; },
+      at(lat, lon) { const i = cellOf(lat, lon); if (i < 0) return null;
+        const t = st.time[i], s = st.src[i];
+        return { min: Math.round(t), pretty: fmtMin(t), seed: s >= 0 ? st.seedList[s].name : null }; } };
+    await reveal();
+  } finally { selecting = false; }
+}
+function buildTabs() {
+  const el = document.getElementById('tabs');
+  el.innerHTML = '';
+  for (const o of ORIGINS) {
+    const b = document.createElement('button');
+    b.className = 'tab'; b.role = 'tab'; b.textContent = o.name; b.dataset.id = o.id;
+    b.addEventListener('click', () => select(o.id));
+    el.appendChild(b);
+  }
+}
+
+/* ============================================================ layout & projection */
+const stage = document.getElementById('stage');
+const sceneCv = document.getElementById('scene'), fxCv = document.getElementById('fx');
+const dpr = Math.min(1.75, window.devicePixelRatio || 1);
+const mercY = latDeg => Math.log(Math.tan(Math.PI / 4 + latDeg * Math.PI / 360));
+const LON_C = (GRID.lonMin + GRID.lonMax) / 2;
+const LON_SPAN_RAD = (GRID.lonMax - GRID.lonMin) * Math.PI / 180;
+let L = null;
+function layout() {
+  const sw = stage.clientWidth > 50 ? stage.clientWidth : Math.max(700, innerWidth || 1200);
+  const sh = stage.clientHeight > 50 ? stage.clientHeight : Math.max(420, (innerHeight || 800) - 160);
+  const aspect = (mercY(GRID.latTop) - mercY(GRID.latBot)) / LON_SPAN_RAD;   // ≈ 1.44, portrait
+  // a reserved margin column at left holds the cartouche — never on the plate
+  const side = Math.min(240, Math.max(168, sw * .22));
+  const padTop = 10, padBot = 26, gap = 36, padR = 30;
+  let mapH = sh - padTop - padBot, mapW = mapH / aspect;
+  const availW = sw - side - gap - padR;
+  if (mapW > availW) { mapW = Math.max(220, availW); mapH = mapW * aspect; }
+  const mapX = side + gap + (availW - mapW) / 2, mapY = padTop + (sh - padTop - padBot - mapH) / 2;
+  L = { sw, sh, side, mapX, mapY, mapW, mapH, s: mapW / LON_SPAN_RAD };
+  for (const cv of [sceneCv, fxCv]) {
+    cv.width = Math.round(sw * dpr); cv.height = Math.round(sh * dpr);
+  }
+}
+/* the view: magnification + centre, clamped to the plate's extents */
+const MY_C = (mercY(GRID.latTop) + mercY(GRID.latBot)) / 2;
+const view = { k: 1, lon0: LON_C, my0: MY_C };
+function clampView() {
+  view.k = Math.max(1, Math.min(14, view.k));
+  const vs = L.s * view.k;
+  const halfLon = (L.mapW / 2) / vs * 180 / Math.PI;
+  view.lon0 = Math.max(GRID.lonMin + halfLon, Math.min(GRID.lonMax - halfLon, view.lon0));
+  const halfMy = (L.mapH / 2) / vs;
+  view.my0 = Math.max(mercY(GRID.latBot) + halfMy, Math.min(mercY(GRID.latTop) - halfMy, view.my0));
+}
+const viewTy = vs => L.mapY + L.mapH / 2 + vs * view.my0;   // y where mercY = 0
+function makeProjection() {
+  const vs = L.s * view.k;
+  return d3.geoMercator()
+    .rotate([-view.lon0, 0]).center([0, 0])
+    .scale(vs)
+    .translate([L.mapX + L.mapW / 2, viewTy(vs)])
+    .clipExtent([[L.mapX, L.mapY], [L.mapX + L.mapW, L.mapY + L.mapH]])
+    .precision(0.25);
+}
+function invert(px, py) {
+  if (px < L.mapX || px > L.mapX + L.mapW || py < L.mapY || py > L.mapY + L.mapH) return null;
+  const vs = L.s * view.k;
+  const lon = view.lon0 + (px - (L.mapX + L.mapW / 2)) / vs * 180 / Math.PI;
+  const lat = (2 * Math.atan(Math.exp((viewTy(vs) - py) / vs)) - Math.PI / 2) * 180 / Math.PI;
+  return [lon, lat];
+}
+
+/* ============================================================ rendering */
+const hex2rgb = h => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
+const RAMP_RGB = RAMP.map(hex2rgb), NIGHT_RGB = NIGHT_RAMP.map(hex2rgb);
+const LAND_RGB = hex2rgb(COL.land), LANDFAR_RGB = hex2rgb(COL.landFar), SEA_RGB = hex2rgb(COL.sea);
+function bandOf(min) {
+  for (let b = 0; b < BAND_MIN.length; b++) if (min <= BAND_MIN[b]) return b;
+  return BAND_MIN.length;
+}
+const noiseTab = new Float32Array(8192);
+for (let i = 0; i < 8192; i++) noiseTab[i] = Math.random() * 2 - 1;
+
+function renderScene(ctx) {
+  ctx.save();
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, L.sw, L.sh);
+  drawWashes(ctx);
+  const proj = makeProjection();
+  const path = d3.geoPath(proj, ctx);
+  const night = renderMode === 'night';
+  ctx.save();
+  ctx.beginPath(); ctx.rect(L.mapX, L.mapY, L.mapW, L.mapH); ctx.clip();
+  const grat = d3.geoGraticule().step(view.k >= 5 ? [1, 1] : [2, 2]);
+  ctx.beginPath(); path(grat()); ctx.lineWidth = 0.55;
+  ctx.strokeStyle = night ? NIGHT.grat : 'rgba(59,50,38,.30)'; ctx.stroke();
+  if (state && state.contours) {
+    if (night) {
+      ctx.save();
+      ctx.lineWidth = 0.8; ctx.strokeStyle = NIGHT.contour;
+      ctx.shadowColor = 'rgba(255,222,150,.30)'; ctx.shadowBlur = 5;
+      drawContours(ctx, proj);
+      ctx.restore();
+    } else {
+      ctx.lineWidth = 0.9; ctx.strokeStyle = 'rgba(64,52,36,.50)';
+      drawContours(ctx, proj);
+    }
+  }
+  ctx.beginPath(); path(geoAll);
+  ctx.lineWidth = night ? 0.7 : 0.85; ctx.strokeStyle = night ? NIGHT.coast : COL.coast;
+  ctx.globalAlpha = night ? .6 : .8; ctx.stroke(); ctx.globalAlpha = 1;
+  drawLabels(ctx, proj);
+  ctx.restore();
+  drawPlateFrame(ctx);
+  drawTitleBlock(ctx);
+  if (!night) drawGrain(ctx);
+  ctx.restore();
+}
+
+function drawWashes(ctx) {
+  const time = state && state.time;
+  const q = dpr * 0.55;
+  const x0 = Math.round(L.mapX * q), y0 = Math.round(L.mapY * q),
+        w = Math.round(L.mapW * q), h = Math.round(L.mapH * q);
+  const img = new ImageData(w, h);
+  const d = img.data;
+  const vs = L.s * view.k;
+  const s = vs * q, cx = (L.mapX + L.mapW / 2) * q, tyP = viewTy(vs) * q;
+  const { W, H, cell, latTop } = GRID;
+  const night = renderMode === 'night', relief = renderMode === 'relief';
+  for (let py = 0; py < h; py++) {
+    const lat = (2 * Math.atan(Math.exp((tyP - (y0 + py)) / s)) - Math.PI / 2) * 180 / Math.PI;
+    const row = Math.floor((latTop - lat) / cell);
+    const rowOk = row >= 0 && row < H;
+    for (let px = 0; px < w; px++) {
+      const lon = view.lon0 + ((x0 + px) - cx) / s * 180 / Math.PI;
+      const col = Math.floor((lon - GRID.lonMin) / cell);
+      const i = (rowOk && col >= 0 && col < W) ? row * W + col : -1;
+      const o = (py * w + px) * 4;
+      const nz = noiseTab[(px * 7 + py * 13) & 8191];
+      let r, g, b;
+      if (i < 0 || !landMask[i]) {                         // sea
+        const SR = night ? NIGHT.sea : SEA_RGB;
+        const nzs = night ? nz * 1.5 : nz * 3;
+        r = SR[0] + nzs; g = SR[1] + nzs; b = SR[2] + nzs;
+        if (i >= 0 && time && isFinite(time[i])) {
+          // harbour isles whose cell rasterises as sea: paint the served dot
+          const c2 = (night ? NIGHT_RGB : RAMP_RGB)[bandOf(time[i])], a = night ? .8 : .5;
+          r = r * (1 - a) + c2[0] * a; g = g * (1 - a) + c2[1] * a; b = b * (1 - a) + c2[2] * a;
+        }
+      } else if (!ukMask[i]) {                             // Ireland, France: beyond the chart
+        const LR = night ? NIGHT.landFar : LANDFAR_RGB;
+        r = LR[0] + nz * 3; g = LR[1] + nz * 3; b = LR[2] + nz * 3;
+      } else if (night) {
+        if (time && isFinite(time[i])) {
+          const c2 = NIGHT_RGB[bandOf(time[i])];
+          const a = 0.88 + nz * 0.04;
+          r = NIGHT.land[0] * (1 - a) + c2[0] * a;
+          g = NIGHT.land[1] * (1 - a) + c2[1] * a;
+          b = NIGHT.land[2] * (1 - a) + c2[2] * a;
+        } else { r = NIGHT.land[0]; g = NIGHT.land[1]; b = NIGHT.land[2]; }
+        r += nz * 2; g += nz * 2; b += nz * 2;
+      } else if (relief && time) {                         // time as terrain
+        const t = time[i];
+        if (isFinite(t)) {
+          const c2 = reliefColor(reliefElev(t));
+          const cE = Math.min(W - 1, col + 2), cW2 = Math.max(0, col - 2);
+          const rN = Math.max(0, row - 2), rS = Math.min(H - 1, row + 2);
+          const tE = time[row * W + cE], tW = time[row * W + cW2],
+                tN = time[rN * W + col], tS = time[rS * W + col];
+          let shade = 1;
+          if (isFinite(tE) && isFinite(tW) && isFinite(tN) && isFinite(tS)) {
+            const gx = (tE - tW) / 2, gy = (tS - tN) / 2;
+            shade = 1 + ((-gx - gy) / RELIEF_CAP) * 9;
+            shade = Math.max(0.74, Math.min(1.2, shade));
+          }
+          r = c2[0] * shade + nz * 5; g = c2[1] * shade + nz * 5; b = c2[2] * shade + nz * 5;
+        } else { r = LAND_RGB[0]; g = LAND_RGB[1]; b = LAND_RGB[2]; }
+      } else {                                             // hand-tinted washes
+        r = LAND_RGB[0]; g = LAND_RGB[1]; b = LAND_RGB[2];
+        if (time && isFinite(time[i])) {
+          const c2 = RAMP_RGB[bandOf(time[i])];
+          const a = COL.wash + nz * 0.05;
+          r = r * (1 - a) + c2[0] * a; g = g * (1 - a) + c2[1] * a; b = b * (1 - a) + c2[2] * a;
+        }
+        r += nz * 5; g += nz * 5; b += nz * 5;
+      }
+      d[o] = r; d[o + 1] = g; d[o + 2] = b; d[o + 3] = 255;
+    }
+  }
+  const tmp = drawWashes._tmp || (drawWashes._tmp = document.createElement('canvas'));
+  tmp.width = w; tmp.height = h;
+  tmp.getContext('2d').putImageData(img, 0, 0);
+  ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
+  ctx.drawImage(tmp, x0 / q, y0 / q, w / q, h / q);
+}
+
+function computeContours(st) {
+  const vals = new Float64Array(N);
+  for (let i = 0; i < N; i++) {
+    const t = st.time[i];
+    vals[i] = (!ukMask[i] || !isFinite(t)) ? NaN : t;
+  }
+  const gen = d3.contours().size([GRID.W, GRID.H]).smooth(true);
+  st.contours = BAND_MIN.map(t => gen.contour(vals, t));
+}
+function drawContours(ctx, proj) {
+  const { cell, latTop } = GRID;
+  for (const c of state.contours) {
+    ctx.beginPath();
+    for (const poly of c.coordinates) for (const ring of poly) {
+      let pen = false;
+      for (let i = 0; i < ring.length; i++) {
+        const gx = ring[i][0], gy = ring[i][1];
+        const gi = Math.min(GRID.H - 1, gy | 0) * GRID.W + Math.min(GRID.W - 1, gx | 0);
+        if (coastDist[gi] <= 1) { pen = false; continue; }
+        const lon = GRID.lonMin + gx * cell, lat = latTop - gy * cell;
+        const p = proj([lon, lat]);
+        if (!p) { pen = false; continue; }
+        if (!pen) { ctx.moveTo(p[0], p[1]); pen = true; }
+        else ctx.lineTo(p[0], p[1]);
+      }
+    }
+    ctx.stroke();
+  }
+}
+
+function drawLabels(ctx, proj) {
+  const night = renderMode === 'night';
+  const occ = [];
+  const collide = (x, y, w, h) => {
+    for (const o of occ) if (x < o.x + o.w && x + w > o.x && y < o.y + o.h && y + h > o.y) return true;
+    occ.push({ x, y, w, h }); return false;
+  };
+  ctx.textBaseline = 'middle';
+  // sea names
+  ctx.font = night
+    ? `500 ${Math.max(11, L.mapH * .013)}px "Archivo", sans-serif`
+    : `italic 500 ${Math.max(12, L.mapH * .015)}px "EB Garamond", serif`;
+  ctx.letterSpacing = '0.42em';
+  ctx.fillStyle = night ? NIGHT.ocean : 'rgba(59,50,38,.42)';
+  ctx.textAlign = 'center';
+  for (const o of OCEANS) {
+    const p = proj([o.lon, o.lat]); if (!p) continue;
+    if (p[0] < L.mapX + 50 || p[0] > L.mapX + L.mapW - 50) continue;
+    if (p[1] < L.mapY + 14 || p[1] > L.mapY + L.mapH - 14) continue;
+    ctx.fillText(o.n, p[0], p[1]);
+    collide(p[0] - 90, p[1] - 10, 180, 20);
+  }
+  ctx.letterSpacing = '0px';
+  // the origin
+  const originCol = night ? NIGHT.origin : '#7d2e1d';
+  const po = proj([ORIGIN.lon, ORIGIN.lat]);
+  if (po) {
+    ctx.fillStyle = originCol;
+    ctx.beginPath(); ctx.arc(po[0], po[1], 3.4, 0, 7); ctx.fill();
+    ctx.lineWidth = .9; ctx.strokeStyle = originCol;
+    ctx.beginPath(); ctx.arc(po[0], po[1], 7, 0, 7); ctx.stroke();
+    ctx.beginPath(); ctx.arc(po[0], po[1], 11.5, 0, 7); ctx.globalAlpha = .45; ctx.stroke(); ctx.globalAlpha = 1;
+    ctx.font = night ? `600 12px "Archivo", sans-serif` : `600 13.5px "EB Garamond", serif`;
+    ctx.fillStyle = night ? NIGHT.origin : '#6e2a1a';
+    // an origin may sit near a plate edge: hang the label on the side that fits
+    const oLabel = ORIGIN.name.toUpperCase();
+    const lw = ctx.measureText(oLabel).width;
+    const fits = po[0] + 9 + lw < L.mapX + L.mapW - 6;
+    ctx.textAlign = fits ? 'left' : 'right';
+    ctx.fillText(oLabel, fits ? po[0] + 9 : po[0] - 9, po[1] - 10);
+    collide(fits ? po[0] + 7 : po[0] - 9 - lw, po[1] - 17, lw + 4, 15);
+    ctx.textAlign = 'left';
+  }
+  // gazetteer, big places first
+  ctx.textAlign = 'left';
+  const byPop = drawLabels._sorted || (drawLabels._sorted = [...PLACES].sort((a, b) => b[3] - a[3]));
+  const maxLabels = L.mapH > 760 ? 90 : 64;
+  let drawn = 0;
+  for (let i = 0; i < byPop.length && drawn < maxLabels; i++) {
+    const [name, lat, lon, pop] = byPop[i];
+    const p = proj([lon, lat]); if (!p) continue;
+    if (p[0] < L.mapX + 8 || p[0] > L.mapX + L.mapW - 8 || p[1] < L.mapY + 8 || p[1] > L.mapY + L.mapH - 8) continue;
+    ctx.font = night
+      ? `${pop > 3e5 ? '500 10' : '400 9.5'}px "Archivo", sans-serif`
+      : `${pop > 3e5 ? 11.5 : 10.5}px "EB Garamond", serif`;
+    const short = name.split(',')[0];
+    const w = ctx.measureText(short).width;
+    const labelled = !collide(p[0] - 2, p[1] - 7, w + 9, 13);
+    // a million-strong city keeps its dot even when its label loses the
+    // collision contest (London beside the West Silvertown origin mark)
+    if (!labelled && pop < 1e6) continue;
+    ctx.fillStyle = night ? NIGHT.labelSoft : 'rgba(59,50,38,.62)';
+    ctx.beginPath(); ctx.arc(p[0], p[1], pop >= 1e6 ? 1.6 : 1.1, 0, 7); ctx.fill();
+    if (!labelled) continue;
+    ctx.fillStyle = night ? NIGHT.labelSoft : 'rgba(59,50,38,.72)';
+    ctx.fillText(short, p[0] + 4, p[1] - 1);
+    drawn++;
+  }
+}
+
+function drawPlateFrame(ctx) {
+  const { mapX, mapY, mapW, mapH } = L;
+  ctx.strokeStyle = COL.ink;
+  ctx.lineWidth = 1.6; ctx.strokeRect(mapX - 5, mapY - 5, mapW + 10, mapH + 10);
+  ctx.lineWidth = .7;  ctx.strokeRect(mapX - 1.5, mapY - 1.5, mapW + 3, mapH + 3);
+  ctx.font = '10px "EB Garamond", serif'; ctx.fillStyle = 'rgba(59,50,38,.75)';
+  ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+  const vs = L.s * view.k, vcx = mapX + mapW / 2, vty = viewTy(vs);
+  const step = view.k >= 5 ? 1 : 2;
+  for (let lon = -10; lon <= 2; lon += step) {
+    const x = vcx + vs * (lon - view.lon0) * Math.PI / 180;
+    if (x < mapX + 4 || x > mapX + mapW - 4) continue;
+    ctx.beginPath(); ctx.moveTo(x, mapY - 5); ctx.lineTo(x, mapY - 1.5);
+    ctx.moveTo(x, mapY + mapH + 1.5); ctx.lineTo(x, mapY + mapH + 5); ctx.stroke();
+    const lab = lon === 0 ? '0' : `${Math.abs(lon)}°${lon < 0 ? 'W' : 'E'}`;
+    ctx.fillText(lab, x, mapY - 8);
+    ctx.fillText(lab, x, mapY + mapH + 13.5);
+  }
+  ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+  for (let lat = 50; lat <= 61; lat += step) {
+    const y = vty - vs * mercY(lat);
+    if (y < mapY + 4 || y > mapY + mapH - 4) continue;
+    ctx.beginPath(); ctx.moveTo(mapX - 5, y); ctx.lineTo(mapX - 1.5, y);
+    ctx.moveTo(mapX + mapW + 1.5, y); ctx.lineTo(mapX + mapW + 5, y); ctx.stroke();
+    ctx.fillText(`${lat}°`, mapX - 8, y);
+    ctx.textAlign = 'left'; ctx.fillText(`${lat}°`, mapX + mapW + 8, y); ctx.textAlign = 'right';
+  }
+  ctx.textBaseline = 'alphabetic';
+}
+
+function wrapText(ctx, text, maxW) {
+  const words = text.split(' '); const lines = []; let cur = '';
+  for (const w of words) {
+    const t = cur ? cur + ' ' + w : w;
+    if (ctx.measureText(t).width > maxW && cur) { lines.push(cur); cur = w; } else cur = t;
+  }
+  if (cur) lines.push(cur);
+  return lines;
+}
+function drawTitleBlock(ctx) {
+  // the cartouche lives in the reserved paper margin, wholly off the plate
+  const boxW = L.side - 26;
+  const x = 13;
+  const para = `shewing the shortest number of hours’ journey from ${ORIGIN.name}, ${ORIGIN.descr}, by the quickest through routes — ${modelMode === 'surface' ? 'road, rail and ferry; no aëroplane is taken' : 'road, rail, scheduled air and ferry'}. It is supposed that connexions are favourable, as the original printed.`;
+  ctx.save();
+  const small = boxW < 190;
+  const paraFs = small ? 10 : 11, paraLh = small ? 12.5 : 13.5;
+  ctx.font = `${paraFs}px "EB Garamond", serif`;
+  const paraLines = wrapText(ctx, para, boxW - 26);
+  const boxH = (small ? 96 : 108) + paraLines.length * paraLh + 26;
+  const y = Math.max(L.mapY, L.mapY + L.mapH / 2 - boxH / 2);
+  ctx.fillStyle = COL.paper;
+  ctx.fillRect(x, y, boxW, boxH);
+  ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(59,50,38,.7)'; ctx.strokeRect(x, y, boxW, boxH);
+  ctx.lineWidth = .6; ctx.strokeRect(x + 3.5, y + 3.5, boxW - 7, boxH - 7);
+  ctx.fillStyle = COL.ink; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+  const cx = x + boxW / 2;
+  const t1 = small ? 24 : 28, t2 = small ? 40 : 47, tr = small ? 50 : 58, tv = small ? 65 : 74, tp = small ? 84 : 96;
+  ctx.font = `700 ${boxW * .058}px "Playfair Display", serif`;
+  ctx.letterSpacing = '0.08em';
+  ctx.fillText('ISOCHRONIC PASSAGE CHART', cx, y + t1);
+  ctx.font = `600 ${boxW * .040}px "Playfair Display", serif`;
+  ctx.letterSpacing = '0.10em';
+  ctx.fillText('OF THE UNITED KINGDOM & IRELAND', cx, y + t2);
+  ctx.letterSpacing = '0px';
+  ctx.beginPath(); ctx.moveTo(cx - 44, y + tr); ctx.lineTo(cx + 44, y + tr);
+  ctx.strokeStyle = 'rgba(59,50,38,.65)'; ctx.lineWidth = .8; ctx.stroke();
+  ctx.fillRect(cx - 1.6, y + tr - 1.6, 3.2, 3.2);
+  ctx.font = `500 10px "EB Garamond", serif`;
+  ctx.letterSpacing = '0.34em';
+  ctx.fillText('MMXXVI', cx, y + tv);
+  ctx.letterSpacing = '0px';
+  ctx.font = `italic ${paraFs}px "EB Garamond", serif`;
+  let yy = y + tp;
+  for (const ln of paraLines) { ctx.fillText(ln, cx, yy); yy += paraLh; }
+  ctx.font = `500 ${small ? 10 : 11}px "EB Garamond", serif`;
+  ctx.letterSpacing = '0.06em';
+  ctx.fillText(small ? 'After Francis Galton, 1881' : 'After the original of Francis Galton, 1881', cx, yy + 8);
+  ctx.letterSpacing = '0px';
+  ctx.restore();
+}
+
+function mulberry(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function drawGrain(ctx) {
+  const { mapX, mapY, mapW, mapH } = L;
+  ctx.save();
+  ctx.globalAlpha = .05; ctx.fillStyle = '#4a3a22';
+  const rnd = mulberry(7);
+  for (let i = 0; i < mapW * mapH / 900; i++) {
+    ctx.fillRect(mapX + rnd() * mapW, mapY + rnd() * mapH, rnd() < .5 ? 1 : .6, .8);
+  }
+  ctx.globalAlpha = .07; ctx.fillStyle = '#fffbe8';
+  for (let i = 0; i < mapW * mapH / 1800; i++) ctx.fillRect(mapX + rnd() * mapW, mapY + rnd() * mapH, .8, .8);
+  const g = ctx.createRadialGradient(mapX + mapW / 2, mapY + mapH / 2, Math.min(mapW, mapH) * .42,
+                                     mapX + mapW / 2, mapY + mapH / 2, Math.max(mapW, mapH) * .72);
+  g.addColorStop(0, 'rgba(80,60,30,0)'); g.addColorStop(1, 'rgba(80,60,30,.10)');
+  ctx.globalAlpha = 1; ctx.fillStyle = g; ctx.fillRect(mapX, mapY, mapW, mapH);
+  ctx.restore();
+}
+
+/* ============================================================ legend & modes */
+const legendEl = document.getElementById('legend');
+function legendHTML() {
+  const nBands = state && state.maxBand != null ? state.maxBand + 1 : BAND_LABELS.length;
+  const items = BAND_LABELS.slice(0, nBands).map((l, i) => ({
+    c: renderMode === 'relief' ? reliefColorCSS(BAND_MIN[i] ?? 800)
+      : renderMode === 'night' ? NIGHT_RAMP[i] : RAMP[i], l
+  }));
+  let html = `<span class="cap">Explanation of colours.</span>` + items.map(it =>
+    `<span class="key"><span class="sw" style="background:${it.c}"></span><span class="lab">${it.l}</span></span>`
+  ).join('');
+  const strip = cols => `background:linear-gradient(90deg, ${cols.join(', ')})`;
+  const reliefCols = [0, 60, 180, 360, 540, 680, 800].map(reliefColorCSS);
+  const seg = (m, label, cols) =>
+    `<button data-m="${m}" class="${renderMode === m ? 'cur' : ''}" title="${label} rendering">
+       <span class="strip" style="${strip(cols)}"></span><span>${label}</span>
+     </button>`;
+  html += `<span class="modesw" role="group" aria-label="conveyances">
+    <span class="swcap">taking</span>
+    <button data-c="all" class="${modelMode === 'all' ? 'cur' : ''}" title="every conveyance"><span>air &amp; rail</span></button>
+    <button data-c="surface" class="${modelMode === 'surface' ? 'cur' : ''}" title="no aëroplane — rail, road and ferry only"><span>rail &amp; sail</span></button>
+  </span>`;
+  html += `<span class="modesw" role="group" aria-label="tinting">
+    <span class="swcap">tinting</span>
+    ${seg('wash', 'washes', RAMP)}
+    ${seg('relief', 'relief', reliefCols)}
+    ${seg('night', 'midnight', NIGHT_RAMP)}
+  </span>`;
+  return html;
+}
+legendEl.addEventListener('click', e => {
+  const cbtn = e.target && e.target.closest && e.target.closest('[data-c]');
+  if (cbtn) {
+    if (cbtn.dataset.c === modelMode || selecting) return;
+    modelMode = cbtn.dataset.c;
+    legendEl.innerHTML = legendHTML();
+    select(ORIGIN.id);              // recompute (or restore from cache) this plate
+    return;
+  }
+  const btn = e.target && e.target.closest && e.target.closest('[data-m]');
+  const m = btn && btn.dataset.m;
+  if (!m || m === renderMode) return;
+  renderMode = m;
+  legendEl.innerHTML = legendHTML();
+  if (state) renderScene(sceneCv.getContext('2d'));
+});
+
+/* ============================================================ progress, reveal */
+const progress = document.getElementById('progress'),
+      progressBar = document.getElementById('progress-bar'),
+      progressLabel = document.getElementById('progress-label');
+function showProgress(label) { progressLabel.textContent = label; progressBar.style.width = '3%'; progress.classList.add('on'); }
+function setProgress(f) { progressBar.style.width = `${Math.round(3 + f * 95)}%`; }
+function hideProgress() { progress.classList.remove('on'); }
+const frame = () => Promise.race([
+  new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))),
+  new Promise(r => setTimeout(r, 150))
+]);
+
+async function reveal() {
+  if (sceneCv.width < 10 || Math.abs(sceneCv.width - Math.round(stage.clientWidth * dpr)) > 2) layout();
+  const buf = document.createElement('canvas');
+  buf.width = sceneCv.width; buf.height = sceneCv.height;
+  renderScene(buf.getContext('2d'));
+  const ctx = sceneCv.getContext('2d');
+  const paintFull = () => { ctx.save(); ctx.scale(dpr, dpr); ctx.drawImage(buf, 0, 0, L.sw, L.sh); ctx.restore(); };
+  if (document.hidden) { paintFull(); return; }
+  const proj = makeProjection();
+  const p0 = proj([ORIGIN.lon, ORIGIN.lat]) || [L.mapX + L.mapW / 2, L.mapY + L.mapH / 2];
+  const maxR = Math.hypot(L.mapW, L.mapH) * 1.05;
+  const t0 = performance.now(), DUR = 900;
+  return new Promise(res => {
+    let done = false;
+    const finish = () => { if (!done) { done = true; paintFull(); res(); } };
+    const watchdog = setTimeout(finish, DUR + 700);
+    const step = now => {
+      if (done) return;
+      const f = Math.min(1, Math.max(0, (now - t0) / DUR));
+      const e = 1 - Math.pow(1 - f, 2.6);
+      ctx.save();
+      ctx.scale(dpr, dpr);
+      ctx.beginPath(); ctx.arc(p0[0], p0[1], 8 + e * maxR, 0, 7); ctx.clip();
+      ctx.drawImage(buf, 0, 0, L.sw, L.sh);
+      ctx.restore();
+      if (f < 1) requestAnimationFrame(step); else { clearTimeout(watchdog); finish(); }
+    };
+    requestAnimationFrame(step);
+  });
+}
+
+/* ============================================================ hover */
+const fxCtx = fxCv.getContext('2d');
+const readout = document.getElementById('readout');
+const bins = new Map();           // over the FULL gazetteer, minor places included
+for (let i = 0; i < GAZ.length; i++) {
+  const key = `${GAZ[i][1] | 0}:${GAZ[i][2] | 0}`;
+  if (!bins.has(key)) bins.set(key, []);
+  bins.get(key).push(i);
+}
+function nearestPlace(lat, lon) {
+  let best = null, bd = 1e9;
+  const blat = lat | 0, blon = lon | 0;
+  for (let dr = -1; dr <= 1; dr++) for (let dc = -1; dc <= 1; dc++) {
+    const arr2 = bins.get(`${blat + dr}:${blon + dc}`);
+    if (!arr2) continue;
+    for (const i of arr2) {
+      const d = havKm(lat, lon, GAZ[i][1], GAZ[i][2]);
+      const w = (d + 2) / Math.pow(Math.log10(Math.max(1000, GAZ[i][3])), 2.6);
+      if (w < bd) { bd = w; best = i; }
+    }
+  }
+  if (best == null) return null;
+  const d = havKm(lat, lon, GAZ[best][1], GAZ[best][2]);
+  return d < 60 ? { name: GAZ[best][0], km: d } : null;
+}
+const fmtGeo = (lat, lon) =>
+  `${Math.abs(lat).toFixed(2)}°${lat >= 0 ? 'N' : 'S'} ${Math.abs(lon).toFixed(2)}°${lon >= 0 ? 'E' : 'W'}`;
+function hideReadout() { readout.classList.remove('on'); fxCtx.clearRect(0, 0, fxCv.width, fxCv.height); }
+
+let hoverRaf = null, lastEv = null, pinned = false, lastCell = null;
+/* zoom & pan: wheel to magnify about the cursor, drag to pan, double-click resets */
+let renderRaf = null;
+function scheduleRender() {
+  if (renderRaf) return;
+  renderRaf = requestAnimationFrame(() => { renderRaf = null; if (state) renderScene(sceneCv.getContext('2d')); });
+}
+let drag = null, dragged = false;
+fxCv.addEventListener('pointerdown', e => {
+  drag = { x: e.clientX, y: e.clientY, lon0: view.lon0, my0: view.my0 };
+  dragged = false;
+  lastEv = e; doHover();
+});
+fxCv.addEventListener('pointermove', e => {
+  if (drag && e.buttons) {
+    const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+    if (dragged || Math.abs(dx) + Math.abs(dy) > 4) {
+      dragged = true;
+      const vs = L.s * view.k;
+      view.lon0 = drag.lon0 - dx / vs * 180 / Math.PI;
+      view.my0 = drag.my0 + dy / vs;
+      clampView(); scheduleRender(); hideReadout();
+      return;
+    }
+  }
+  lastEv = e; if (!hoverRaf) hoverRaf = requestAnimationFrame(doHover);
+});
+fxCv.addEventListener('pointerup', () => { drag = null; });
+fxCv.addEventListener('pointerleave', () => { drag = null; lastEv = null; if (!pinned) hideReadout(); });
+fxCv.addEventListener('wheel', e => {
+  e.preventDefault();
+  const r = stage.getBoundingClientRect();
+  const px = e.clientX - r.left, py = e.clientY - r.top;
+  const under = invert(px, py);
+  view.k = Math.max(1, Math.min(14, view.k * Math.exp(-e.deltaY * 0.0018)));
+  if (under) {        // keep the point under the cursor under the cursor
+    const vs = L.s * view.k;
+    view.lon0 = under[0] - (px - (L.mapX + L.mapW / 2)) / vs * 180 / Math.PI;
+    view.my0 = (py - (L.mapY + L.mapH / 2)) / vs + mercY(under[1]);
+  }
+  clampView(); scheduleRender();
+  lastEv = e; if (!hoverRaf) hoverRaf = requestAnimationFrame(doHover);
+}, { passive: false });
+fxCv.addEventListener('dblclick', () => {
+  view.k = 1; view.lon0 = LON_C; view.my0 = MY_C;
+  clampView(); scheduleRender();
+});
+fxCv.addEventListener('click', () => {
+  if (dragged) { dragged = false; return; }   // a pan, not a pin
+  if (!state) return;
+  if (pinned) { unpin(); return; }
+  if (!lastCell) return;
+  pinned = true;
+  readout.innerHTML = buildJourneyHTML(lastCell.i, lastCell.lon, lastCell.lat, true);
+  readout.classList.add('on', 'pinned');
+});
+function unpin() { pinned = false; readout.classList.remove('pinned'); if (!lastEv) hideReadout(); }
+addEventListener('keydown', e => { if (e.key === 'Escape') unpin(); });
+
+function cellAt(lon, lat) {
+  let i = cellOf(lat, lon);
+  if (i < 0) return -1;
+  const informative = j => state.time && isFinite(state.time[j]);
+  if (!informative(i)) {
+    const row = (i / GRID.W) | 0, col = i % GRID.W;
+    outer: for (let rr = 1; rr <= 2; rr++) {
+      for (let dr = -rr; dr <= rr; dr++) for (let dc = -rr; dc <= rr; dc++) {
+        const nr = row + dr, nc = col + dc;
+        if (nr < 0 || nr >= GRID.H || nc < 0 || nc >= GRID.W) continue;
+        const j = nr * GRID.W + nc;
+        if (informative(j)) { i = j; break outer; }
+      }
+    }
+  }
+  return i;
+}
+
+function buildJourneyHTML(i, lon, lat, detail) {
+  const place = nearestPlace(lat, lon);
+  const placeLine = place ? `${place.km > 25 ? 'near ' : ''}${place.name}` : fmtGeo(lat, lon);
+  const geoLine = place ? fmtGeo(lat, lon) : '';
+  let html = `<div class="place">${placeLine}</div><div class="geo">${geoLine}</div>`;
+  const t = state.time[i];
+  if (!isFinite(t)) {
+    if (!landMask[i]) html += `<div class="total">—</div><div class="band">open sea</div>`;
+    else if (!ukMask[i]) html += `<div class="total">—</div><div class="band">beyond this chart — France</div>`;
+    else html += `<div class="total">—</div><div class="band">no scheduled passage — an unserved isle</div>`;
+    return html;
+  }
+  const b = bandOf(t);
+  html += `<div class="total">${fmtMin(t)}</div>
+           <div class="band">${BAND_LABELS[b]} · from ${ORIGIN.name}</div><hr><div class="legs">`;
+  const sIdx = state.src[i];
+  const seed = sIdx >= 0 ? state.seedList[sIdx] : null;
+  let est = false;
+  if (seed) {
+    for (const leg of seed.legs) {
+      if (leg.est) est = true;
+      html += `<div class="leg ${leg.k}"><span class="l">${leg.label}${leg.est ? '°' : ''}</span><span class="t">${fmtMin(leg.min)}</span></div>`;
+      if (detail && leg.k === 'ship') html += `<div class="sub">scheduled sailing · crossings weather-permitting</div>`;
+    }
+    const tail = t - seed.min;
+    if (tail > 4) {
+      const lab = seed.kind === 'origin' ? (tail < 90 ? `out from ${ORIGIN.name} by road` : 'onward by road') : 'onward by road';
+      html += `<div class="leg"><span class="l">${lab}</span><span class="t">${fmtMin(tail)}</span></div>`;
+    }
+  }
+  html += `</div>`;
+  html += detail
+    ? `<div class="foot">${est ? '° estimated — service not confirmed for June 2026 · ' : ''}exact schedules are deliberately not modelled — favourable connexions assumed · click or Esc to release</div>`
+    : `<div class="foot">${est ? '° estimated service · ' : ''}door-to-door, favourable connexions · click to pin details</div>`;
+  return html;
+}
+
+function doHover() {
+  hoverRaf = null;
+  if (!lastEv || !state || pinned) return;
+  const r = stage.getBoundingClientRect();
+  const px = lastEv.clientX - r.left, py = lastEv.clientY - r.top;
+  const ll = invert(px, py);
+  fxCtx.clearRect(0, 0, fxCv.width, fxCv.height);
+  if (!ll) { readout.classList.remove('on'); lastCell = null; return; }
+  const [lon, lat] = ll;
+  const i = cellAt(lon, lat);
+  if (i < 0) { readout.classList.remove('on'); lastCell = null; return; }
+  lastCell = { i, lon, lat };
+  fxCtx.save();
+  fxCtx.scale(dpr, dpr);
+  fxCtx.strokeStyle = 'rgba(59,50,38,.5)'; fxCtx.lineWidth = .6;
+  fxCtx.setLineDash([1, 3]);
+  fxCtx.beginPath();
+  fxCtx.moveTo(L.mapX, py); fxCtx.lineTo(L.mapX + L.mapW, py);
+  fxCtx.moveTo(px, L.mapY); fxCtx.lineTo(px, L.mapY + L.mapH);
+  fxCtx.stroke(); fxCtx.setLineDash([]);
+  fxCtx.beginPath(); fxCtx.arc(px, py, 5, 0, 7);
+  fxCtx.strokeStyle = '#7d2e1d'; fxCtx.lineWidth = 1.1; fxCtx.stroke();
+  fxCtx.restore();
+  readout.innerHTML = buildJourneyHTML(i, lon, lat, false);
+  readout.classList.add('on');
+  const rw = 308, rh = readout.offsetHeight + 10;
+  let rx = px + 22, ry = py + 18;
+  if (rx + rw > L.sw - 8) rx = px - rw - 18;
+  if (ry + rh > stage.clientHeight - 6) ry = py - rh - 12;
+  readout.style.left = `${Math.max(6, rx)}px`;
+  readout.style.top = `${Math.max(6, ry)}px`;
+}
+
+/* ============================================================ methodology */
+const methoEl = document.getElementById('metho');
+document.getElementById('metho-link').addEventListener('click', () => { fillMetho(); methoEl.classList.add('on'); });
+document.getElementById('metho-close').addEventListener('click', () => methoEl.classList.remove('on'));
+methoEl.addEventListener('click', e => { if (e.target === methoEl) methoEl.classList.remove('on'); });
+addEventListener('keydown', e => { if (e.key === 'Escape') methoEl.classList.remove('on'); });
+function fillMetho() {
+  document.getElementById('metho-body').innerHTML = `
+  <h2>On the Construction of this Chart</h2>
+  <div class="sub">being an account of the data and the assumptions employed</div>
+  <h4>The model</h4>
+  <p>Every point of the United Kingdom and Ireland is assigned the shortest door-to-door journey time from the chosen
+  origin — <b>West Silvertown</b>, in the East of London; <b>Crawley</b>, in the County of Sussex; or
+  <b>Dungannon</b>, in the County of Tyrone — combining four conveyances. <b>Rail:</b> a researched network of
+  ${RAIL_NODES.length} stations and ${RAIL_EDGES.length} timetabled links — each at its fastest regular through
+  service — with a twenty-minute station buffer and eighteen minutes per interchange. West Silvertown enters
+  it at the London termini by DLR, Jubilee and Elizabeth lines; Crawley through Gatwick, Brighton and the
+  Thameslink core; Dungannon, whose own railway closed in 1956, enters it by air at the network’s airports.
+  Ireland rides Irish Rail’s InterCity from Dublin (Cork, Galway, Limerick) and the Enterprise to Belfast.
+  <b>Air:</b> ${ORIGINS.reduce((s, o) => s + o.air.length, 0)} researched itineraries across the three plates.
+  London City lies two stops from West Silvertown by the Docklands Railway, and its swift check-in carries
+  that plate; Crawley has Gatwick at the end of a fifteen-minute ride; Dungannon drives the M1 to Belfast
+  International and Belfast City, whence easyJet’s shuttle network (Manchester, Liverpool, Birmingham,
+  Newcastle, Bristol, Edinburgh, Glasgow, the London fields) opens Great Britain. Beyond the trunk routes,
+  the Highlands &amp; Islands network — Sumburgh, Kirkwall, Stornoway, Benbecula, the beach at Barra, Islay,
+  Tiree, Campbeltown, Wick — is reached by connexion at Edinburgh, Glasgow or Aberdeen, including the
+  islander hops to North Ronaldsay and Papa Westray; Newquay and the Skybus to Scilly via Gatwick.
+  Ireland is opened by Dublin, Cork, Shannon and Knock from the London fields, with the Aer Lingus regional
+  hop to Donegal; from Dungannon, Dublin itself is a morning’s drive down the M1.</p>
+  <p><b>Ferry:</b> ${FERRIES.filter(f => f[8] !== 'bridge').length} scheduled crossings — Wightlink and the Red Jet to the Isle of Wight,
+  the Scillonian, the CalMac network through the Hebrides (Mull, Iona, Arran, Bute, Islay, Jura, Gigha, Coll,
+  Colonsay, the Small Isles, the Sound of Harris and Sound of Barra), NorthLink and Pentland Ferries to Orkney,
+  the overnight boat and inter-island ferries of Shetland — Fair Isle and Foula by their actual weekly boats —
+  the Steam Packet to Douglas (from Heysham, Liverpool and, in season, Belfast), the Oldenburg to Lundy,
+  the Cairnryan sailings to Larne and Belfast — which, from Dungannon, run the other way and land
+  Galloway within reach — and the Irish Sea boats: Holyhead to Dublin, Fishguard and Pembroke Dock to
+  Rosslare, and the Aran Islands ferry from Rossaveel.
+  A thirty-five minute attendance at the pier is allowed; the chart may drive to any pier, sail, and drive on,
+  chaining crossings where the islands themselves do (Skye to Harris, Eriskay to Barra).</p>
+  <p><b>Roads:</b> the remaining distance is covered over a 1/50° grid by Dijkstra’s algorithm at an effective
+  long-distance speed of ${ROAD.baseKmh} km/h with a circuity factor of ${ROAD.circuity}, slowed across researched
+  terrain provinces — Greater London’s traffic, the North-west Highlands, the Grampians, the Lakes, the
+  Pennines, Snowdonia, mid-Wales, Dartmoor, and the island groups. Congestion in other cities is not
+  separately modelled.</p>
+  <h4>What the chart assumes, and what it omits</h4>
+  <ul>
+    <li>The legend’s <i>taking</i> switch offers a second reckoning: <b>rail &amp; sail</b>, in which no
+    aëroplane is taken and the journey goes by road, rail and ferry alone — Belfast by the Holyhead boat
+    and the Enterprise, Shetland by the overnight sailing from Aberdeen, as it was before the air age.</li>
+    <li>Connexions are <i>favourable</i>: no waiting for to-morrow’s sailing. Where service is thin — Fair Isle’s
+    thrice-weekly Good Shepherd, the seasonal Oldenburg — the chart shows the journey as if it left when you
+    were ready, as Galton’s plate printed in 1881.</li>
+    <li>France appears for geography only and is not coloured; the few unserved isles (St Kilda among them)
+    stay bare and the card says so. The Republic of Ireland is charted in full — roads at Irish trunk speeds,
+    Irish Rail, the Irish Sea ferries, and the open land border with the North, as in life.</li>
+    <li>The Channel Islands lie south of the plate. The Isle of Man, a Crown Dependency, is included by its
+    real air and sea services.</li>
+    <li>Fares, weather, the trouble of sleep, and the difference between a kerb and a front door are all omitted.
+    Block times are typical scheduled gate-to-gate, June 2026; a ° marks a service estimated rather than confirmed.</li>
+  </ul>
+  <h4>The original</h4>
+  <p>Francis Galton’s <i>Isochronic Passage Chart for Travellers</i> (Proceedings of the Royal Geographical
+  Society, 1881) coloured the world in days from London. These plates borrow his title, his caveat and his
+  hand-tints, and turn them on the country itself — from a DLR platform in the East End, a Sussex new town
+  under the Gatwick flight-path, and a Tyrone market town whose railway closed in 1956. What took Galton’s
+  traveller a day of preparation now reaches Shetland before supper.</p>
+  <p class="note">Geometry: Natural Earth 1:10m (public domain). Timetables: National Rail, Trainline, CalMac,
+  NorthLink, Orkney Ferries, Shetland Islands Council, Wightlink, Red Funnel, Isles of Scilly Travel, the
+  Isle of Man Steam Packet, Loganair, British Airways and easyJet published schedules, June 2026 —
+  approximated to the nearest five minutes.</p>`;
+}
+
+/* ============================================================ boot */
+let booted = false;
+async function boot() {
+  layout();
+  buildTabs();
+  legendEl.innerHTML = legendHTML();
+  showProgress('preparing the plate — coastlines, frontiers, roads');
+  await frame();
+  await (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve());
+  buildStaticGrid();
+  booted = true;
+  const want = (location.hash || '').replace('#', '');
+  await select(ORIGINS.some(o => o.id === want) ? want : 'wsv');
+}
+addEventListener('hashchange', () => {
+  const id = (location.hash || '').replace('#', '');
+  if (booted && id !== ORIGIN.id && ORIGINS.some(o => o.id === id)) select(id);
+});
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden && booted && state && sceneCv.width < 10) {
+    layout();
+    renderScene(sceneCv.getContext('2d'));
+  }
+});
+let resizeT = null;
+addEventListener('resize', () => {
+  clearTimeout(resizeT);
+  resizeT = setTimeout(() => {
+    if (!booted) return;
+    layout();
+    if (state) renderScene(sceneCv.getContext('2d'));
+  }, 160);
+});
+boot();
+</script>
+</body>
+</html>
