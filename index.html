@@ -1680,7 +1680,8 @@ fxCv.addEventListener('pointerup', () => { drag = null; });
 fxCv.addEventListener('pointerleave', () => { drag = null; lastEv = null; if (!pinned) hideReadout(); });
 fxCv.addEventListener('wheel', e => {
   e.preventDefault();
-  const px = e.offsetX, py = e.offsetY;
+  const r = fxCv.getBoundingClientRect();
+  const px = e.clientX - r.left, py = e.clientY - r.top;
   const under = invert(px, py);
   view.k = Math.max(1, Math.min(14, view.k * Math.exp(-e.deltaY * 0.0018)));
   if (under) {        // keep the point under the cursor under the cursor
@@ -1765,7 +1766,8 @@ function buildJourneyHTML(i, lon, lat, detail) {
 function doHover() {
   hoverRaf = null;
   if (!lastEv || !state || pinned) return;
-  const px = lastEv.offsetX, py = lastEv.offsetY;
+  const r = fxCv.getBoundingClientRect();
+  const px = lastEv.clientX - r.left, py = lastEv.clientY - r.top;
   const ll = invert(px, py);
   fxCtx.clearRect(0, 0, fxCv.width, fxCv.height);
   if (!ll) { readout.classList.remove('on'); lastCell = null; return; }
@@ -1775,12 +1777,6 @@ function doHover() {
   lastCell = { i, lon, lat };
   fxCtx.save();
   fxCtx.scale(dpr, dpr);
-  fxCtx.strokeStyle = 'rgba(59,50,38,.5)'; fxCtx.lineWidth = .6;
-  fxCtx.setLineDash([1, 3]);
-  fxCtx.beginPath();
-  fxCtx.moveTo(L.mapX, py); fxCtx.lineTo(L.mapX + L.mapW, py);
-  fxCtx.moveTo(px, L.mapY); fxCtx.lineTo(px, L.mapY + L.mapH);
-  fxCtx.stroke(); fxCtx.setLineDash([]);
   fxCtx.beginPath(); fxCtx.arc(px, py, 5, 0, 7);
   fxCtx.strokeStyle = '#7d2e1d'; fxCtx.lineWidth = 1.1; fxCtx.stroke();
   fxCtx.restore();
